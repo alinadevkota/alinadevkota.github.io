@@ -2,62 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>CVPR 2026 Paper | Your Paper Title</title>
-
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
-  <style>
-    body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; color: #333; }
-    .container { max-width: 900px; margin: auto; padding: 40px; }
-    h1 { font-size: 2.4em; margin-bottom: 0.2em; }
-    .authors { font-size: 1.1em; color: #555; margin-bottom: 1.5em; }
-    .section { margin-top: 2em; }
-    .button { margin: 0.5em 0.2em; padding: 0.6em 1.1em; background: #007bff; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; }
-    .gallery img { width: 100%; max-width: 300px; margin: 8px; border-radius: 4px; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FedVG | CVPR 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-<div class="container">
+  <div class="container">
+    
+    <!-- Title & Authors -->
+    <header class="header">
+      <h1>FedVG: Gradient-Guided Aggregation for Enhanced Federated Learning</h1>
+      <p class="authors">
+        Alina Devkota¹, Jacob Thrasher¹, Donald Adjeroh¹, Binod Bhattarai², Prashnna K. Gyawali¹<br>
+        ¹West Virginia University, Morgantown, WV, USA | ²University of Aberdeen, Aberdeen, UK<br>
+        {ad00139,jdt0025}@mix.wvu.edu, {donald.adjeroh,prashnna.gyawali}@mail.wvu.edu, binod.bhattarai@abdn.ac.uk
+      </p>
+    </header>
 
-  <!-- TITLE -->
-  <h1>Your Paper Title</h1>
-  <div class="authors">
-    Alina Devkota<sup>1</sup>, Coauthor A<sup>2</sup><br>
-    <sup>1</sup>West Virginia University — <sup>2</sup>Other Institution
+    <!-- Abstract -->
+    <section id="abstract">
+      <h2>Abstract</h2>
+      <p>
+        Federated Learning (FL) enables collaborative model training across multiple clients without sharing their private data. However, data heterogeneity across clients leads to client drift, which degrades the overall generalization performance of the model. This effect is further compounded by overemphasis on poorly performing clients. To address this problem, we propose FedVG, a novel gradient-based federated aggregation framework that leverages a global validation set to guide the optimization process. Such a global validation set can be established using readily available public datasets, ensuring accessibility and consistency across clients without compromising privacy. In contrast to conventional approaches that prioritize client dataset volume, FedVG assesses the generalization ability of client models by measuring the magnitude of validation gradients across layers. Specifically, we compute layerwise gradient norms to derive a client-specific score that reflects how much each client needs to adjust for improved generalization on the global validation set, thereby enabling more informed and adaptive federated aggregation. Extensive experiments on both natural and medical image benchmarking datasets, across diverse model architectures, demonstrate that FedVG consistently improves performance, particularly in highly heterogeneous settings. Moreover, FedVG is modular and can be seamlessly integrated with various state-of-the-art FL algorithms, often further improving their results.
+      </p>
+    </section>
+
+    <!-- Video Placeholder -->
+    <section id="video">
+      <h2>Video</h2>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID_PLACEHOLDER" frameborder="0" allowfullscreen></iframe>
+    </section>
+
+    <!-- Results / Gallery Placeholder -->
+    <section id="results">
+      <h2>Results</h2>
+      <div class="gallery">
+        <img src="img/result1.png" alt="Result 1">
+        <img src="img/result2.png" alt="Result 2">
+        <img src="img/result3.png" alt="Result 3">
+      </div>
+    </section>
+
+    <!-- Links -->
+    <section id="links">
+      <h2>Links</h2>
+      <a href="https://github.com/alinadevkota/FL-grad-aggregation" class="button">💻 Code</a>
+      <a href="https://arxiv.org/abs/ARXIV_PLACEHOLDER" class="button">📄 ArXiv</a>
+      <a href="https://openaccess.thecvf.com/content/CVPR2026/html/PAPER_PLACEHOLDER.html" class="button">🔗 CVPR</a>
+    </section>
+
   </div>
-
-  <!-- ABSTRACT -->
-  <div class="section" id="abstract">
-    <h2>Abstract</h2>
-    <p>
-      Your abstract goes here (1–2 paragraphs summarizing contributions).
-    </p>
-  </div>
-
-  <!-- VIDEO -->
-  <div class="section" id="video">
-    <h2>Video</h2>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-  </div>
-
-  <!-- RESULTS -->
-  <div class="section" id="results">
-    <h2>Results</h2>
-    <div class="gallery">
-      <img src="img/result1.png" alt="Result 1">
-      <img src="img/result2.png" alt="Result 2">
-    </div>
-  </div>
-
-  <!-- DOWNLOAD & CODE -->
-  <div class="section" id="links">
-    <h2>Links</h2>
-    <a href="https://arxiv.org/abs/YOUR_ARXIV_ID" class="button">📄 Paper</a>
-    <a href="https://github.com/yourrepo" class="button">💻 Code</a>
-    <a href="https://openaccess.thecvf.com/content/CVPR2026/html/YOURPAPER.html" class="button">🔗 CVPR</a>
-  </div>
-
-</div>
 </body>
 </html>
