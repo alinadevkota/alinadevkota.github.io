@@ -1,57 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FedVG | CVPR 2026</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FedVG | CVPR 2026</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
+
+<!-- Hero / Title Section -->
+<section class="hero">
   <div class="container">
-    
-    <!-- Title & Authors -->
-    <header class="header">
-      <h1>FedVG: Gradient-Guided Aggregation for Enhanced Federated Learning</h1>
-      <p class="authors">
-        Alina Devkota¹, Jacob Thrasher¹, Donald Adjeroh¹, Binod Bhattarai², Prashnna K. Gyawali¹<br>
-        ¹West Virginia University, Morgantown, WV, USA | ²University of Aberdeen, Aberdeen, UK<br>
-        {ad00139,jdt0025}@mix.wvu.edu, {donald.adjeroh,prashnna.gyawali}@mail.wvu.edu, binod.bhattarai@abdn.ac.uk
-      </p>
-    </header>
-
-    <!-- Abstract -->
-    <section id="abstract">
-      <h2>Abstract</h2>
-      <p>
-        Federated Learning (FL) enables collaborative model training across multiple clients without sharing their private data. However, data heterogeneity across clients leads to client drift, which degrades the overall generalization performance of the model. This effect is further compounded by overemphasis on poorly performing clients. To address this problem, we propose FedVG, a novel gradient-based federated aggregation framework that leverages a global validation set to guide the optimization process. Such a global validation set can be established using readily available public datasets, ensuring accessibility and consistency across clients without compromising privacy. In contrast to conventional approaches that prioritize client dataset volume, FedVG assesses the generalization ability of client models by measuring the magnitude of validation gradients across layers. Specifically, we compute layerwise gradient norms to derive a client-specific score that reflects how much each client needs to adjust for improved generalization on the global validation set, thereby enabling more informed and adaptive federated aggregation. Extensive experiments on both natural and medical image benchmarking datasets, across diverse model architectures, demonstrate that FedVG consistently improves performance, particularly in highly heterogeneous settings. Moreover, FedVG is modular and can be seamlessly integrated with various state-of-the-art FL algorithms, often further improving their results.
-      </p>
-    </section>
-
-    <!-- Video Placeholder -->
-    <section id="video">
-      <h2>Video</h2>
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID_PLACEHOLDER" frameborder="0" allowfullscreen></iframe>
-    </section>
-
-    <!-- Results / Gallery Placeholder -->
-    <section id="results">
-      <h2>Results</h2>
-      <div class="gallery">
-        <img src="img/result1.png" alt="Result 1">
-        <img src="img/result2.png" alt="Result 2">
-        <img src="img/result3.png" alt="Result 3">
-      </div>
-    </section>
-
-    <!-- Links -->
-    <section id="links">
-      <h2>Links</h2>
-      <a href="https://github.com/alinadevkota/FL-grad-aggregation" class="button">💻 Code</a>
-      <a href="https://arxiv.org/abs/ARXIV_PLACEHOLDER" class="button">📄 ArXiv</a>
-      <a href="https://openaccess.thecvf.com/content/CVPR2026/html/PAPER_PLACEHOLDER.html" class="button">🔗 CVPR</a>
-    </section>
-
+    <h1>FedVG: Gradient-Guided Aggregation for Enhanced Federated Learning</h1>
+    <p class="authors">
+      Alina Devkota¹, Jacob Thrasher¹, Donald Adjeroh¹, Binod Bhattarai², Prashnna K. Gyawali¹<br>
+      ¹West Virginia University, Morgantown, WV, USA | ²University of Aberdeen, Aberdeen, UK<br>
+      {ad00139,jdt0025}@mix.wvu.edu, {donald.adjeroh,prashnna.gyawali}@mail.wvu.edu, binod.bhattarai@abdn.ac.uk
+    </p>
   </div>
+</section>
+
+<!-- Abstract -->
+<section class="abstract">
+  <div class="container">
+    <h2>Abstract</h2>
+    <p>
+      Federated Learning (FL) enables collaborative model training across multiple clients without sharing their private data. However, data heterogeneity across clients leads to client drift, which degrades the overall generalization performance of the model. This effect is further compounded by overemphasis on poorly performing clients. To address this problem, we propose FedVG, a novel gradient-based federated aggregation framework that leverages a global validation set to guide the optimization process. Such a global validation set can be established using readily available public datasets, ensuring accessibility and consistency across clients without compromising privacy. In contrast to conventional approaches that prioritize client dataset volume, FedVG assesses the generalization ability of client models by measuring the magnitude of validation gradients across layers. Specifically, we compute layerwise gradient norms to derive a client-specific score that reflects how much each client needs to adjust for improved generalization on the global validation set, thereby enabling more informed and adaptive federated aggregation. Extensive experiments on both natural and medical image benchmarking datasets, across diverse model architectures, demonstrate that FedVG consistently improves performance, particularly in highly heterogeneous settings. Moreover, FedVG is modular and can be seamlessly integrated with various state-of-the-art FL algorithms, often further improving their results.
+    </p>
+  </div>
+</section>
+
+<!-- Video -->
+<section class="video">
+  <div class="container">
+    <h2>Video</h2>
+    <div class="video-wrapper">
+      <iframe width="800" height="450" src="https://www.youtube.com/embed/VIDEO_ID_PLACEHOLDER" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- Results Gallery -->
+<section class="results">
+  <div class="container">
+    <h2>Results</h2>
+    <div class="gallery">
+      <div class="gallery-item"><img src="img/result1.png" alt="Result 1"></div>
+      <div class="gallery-item"><img src="img/result2.png" alt="Result 2"></div>
+      <div class="gallery-item"><img src="img/result3.png" alt="Result 3"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Links -->
+<section class="links">
+  <div class="container">
+    <h2>Links</h2>
+    <a href="https://github.com/alinadevkota/FL-grad-aggregation" class="button">💻 Code</a>
+    <a href="https://arxiv.org/abs/ARXIV_PLACEHOLDER" class="button">📄 ArXiv</a>
+    <a href="https://openaccess.thecvf.com/content/CVPR2026/html/PAPER_PLACEHOLDER.html" class="button">🔗 CVPR</a>
+  </div>
+</section>
+
 </body>
 </html>
