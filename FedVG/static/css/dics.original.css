@@ -189,3 +189,81 @@
 .b-dics--vertical .b-dics__slider:before {
     transform : translate(-50%, -50%);
 }
+
+
+
+.b-dics--side-by-side {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    gap: 5px; /* space between images */
+  }
+  
+  .b-dics__section_sbs {
+    flex: 1; /* equal width per image */
+    overflow: hidden;
+  }
+  
+  .b-dics__section_sbs img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* keeps images proportional */
+    display: block;
+  }
+
+  .images-row{
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px;
+    max-width: 1500px;
+    margin: 0 auto;
+  }
+  
+  .images-row > div {
+    flex: 1;
+  }
+  
+  .images-row img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  #scene-carousel-sbs .content ul {
+    display: inline-block;       /* shrink UL to content */
+    text-align: left;            /* bullets + text aligned together */
+    margin: 0 auto;              /* center the UL block */
+    padding-left: 1.5em;         /* space for bullets */
+    list-style-type: disc !important;       /* force bullets */
+    list-style-position: outside !important; 
+  }
+  
+  #scene-carousel-sbs .content ul li {
+    display: list-item !important;  /* restore li display */
+    list-style: disc !important;    /* restore bullet marker */
+  }
+
+
+  
+  /* Each image + label block */
+  .image-block {
+    display: flex;
+    align-items: center;
+    flex-direction: row;   /* label on left, image on right */
+    max-width: 1600px;      /* adjust image width */
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  
+  /* Y-axis label */
+  .image-block .y-label {
+    writing-mode: vertical-rl; /* rotate 90 deg */
+    transform: rotate(180deg);  /* flip upright */
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+    margin-right: 10px;
+    white-space: nowrap;
+  }

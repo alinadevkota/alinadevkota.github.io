@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
-  <meta name="description"
-        content="Multi-View Pose-Agnostic Change Localization with Zero Labels">
-  <meta name="keywords" content="Multi-view Scene Change Detection, Scene Change Detection, Pose-agnostic Change Detection, Label-free Change Detection, 3D Change Detection, Gaussian Splatting, 3D Scene Change Detection, Multi-view Change Localization, Zero-shot Change Detection">
+  <meta name="description" content="FedVG: Gradient-Guided Aggregation for Enhanced Federated Learning">
+  <meta name="keywords"
+    content="Federated Learning, Computer Vision, Medical Imaging, Gradient-Guided Aggregation, Data Heterogeneity, Layer-wise Gradient Analysis">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Multi-View Pose-Agnostic Change Localization with Zero Labels</title>
+  <title>FedVG: Gradient-Guided Aggregation for Enhanced Federated
+    Learning</title>
 
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/dics.original.css">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/logo.jpg">
+  <link rel="icon" href="./static/images/logo.png">
   <link rel="stylesheet" href="./static/css/index.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -28,7 +27,13 @@
   <script src="./static/js/index.js"></script>
   <script src="./static/js/dics.original.js"></script>
 
- 
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
 <body>
 
   <script>
@@ -36,541 +41,569 @@
     document.addEventListener('DOMContentLoaded', domReady);
 
     function domReady() {
-        new Dics({
-            container: document.querySelectorAll('.b-dics')[0],
-            textPosition: 'top'
-        }); 
-        new Dics({
-            container: document.querySelectorAll('.b-dics')[1],
-            textPosition: 'top'
-        }); 
-        new Dics({
-            container: document.querySelectorAll('.b-dics')[2],
-            textPosition: 'top'
-        }); 
-        new Dics({
-            container: document.querySelectorAll('.b-dics')[3],
-            textPosition: 'top'
-        }); 
-        new Dics({
-            container: document.querySelectorAll('.b-dics')[4],
-            textPosition: 'top'
-        }); 
-        new Dics({
-            container: document.querySelectorAll('.b-dics')[5],
-            textPosition: 'top'
-        }); 
-        new Dics({
-            container: document.querySelectorAll('.b-dics')[6],
-            textPosition: 'top'
-        }); 
-        new Dics({
-            container: document.querySelectorAll('.b-dics')[7],
-            textPosition: 'top'
-        }); 
-        new Dics({
-            container: document.querySelectorAll('.b-dics')[8],
-            textPosition: 'top'
-        }); 
-        new Dics({
-            container: document.querySelectorAll('.b-dics')[9],
-            textPosition: 'top'
-        }); 
-        new Dics({
-            container: document.querySelectorAll('.b-dics')[10],
-            textPosition: 'top'
-        }); 
-        new Dics({
-            container: document.querySelectorAll('.b-dics')[11],
-            textPosition: 'top'
-        }); 
-        new Dics({
-            container: document.querySelectorAll('.b-dics')[12],
-            textPosition: 'top'
-        }); 
-        new Dics({
-            container: document.querySelectorAll('.b-dics')[13],
-            textPosition: 'top'
-        }); 
-        new Dics({
-            container: document.querySelectorAll('.b-dics')[14],
-            textPosition: 'top'
-        }); 
+      new Dics({
+        container: document.querySelectorAll('.b-dics')[0],
+        textPosition: 'top'
+      });
+      new Dics({
+        container: document.querySelectorAll('.b-dics')[1],
+        textPosition: 'top'
+      });
+      new Dics({
+        container: document.querySelectorAll('.b-dics')[2],
+        textPosition: 'top'
+      });
+      new Dics({
+        container: document.querySelectorAll('.b-dics')[3],
+        textPosition: 'top'
+      });
+      new Dics({
+        container: document.querySelectorAll('.b-dics')[4],
+        textPosition: 'top'
+      });
+      new Dics({
+        container: document.querySelectorAll('.b-dics')[5],
+        textPosition: 'top'
+      });
+      new Dics({
+        container: document.querySelectorAll('.b-dics')[6],
+        textPosition: 'top'
+      });
+      new Dics({
+        container: document.querySelectorAll('.b-dics')[7],
+        textPosition: 'top'
+      });
+      new Dics({
+        container: document.querySelectorAll('.b-dics')[8],
+        textPosition: 'top'
+      });
+      new Dics({
+        container: document.querySelectorAll('.b-dics')[9],
+        textPosition: 'top'
+      });
+      new Dics({
+        container: document.querySelectorAll('.b-dics')[10],
+        textPosition: 'top'
+      });
+      new Dics({
+        container: document.querySelectorAll('.b-dics')[11],
+        textPosition: 'top'
+      });
+      new Dics({
+        container: document.querySelectorAll('.b-dics')[12],
+        textPosition: 'top'
+      });
+      new Dics({
+        container: document.querySelectorAll('.b-dics')[13],
+        textPosition: 'top'
+      });
+      new Dics({
+        container: document.querySelectorAll('.b-dics')[14],
+        textPosition: 'top'
+      });
     }
-</script>
+  </script>
 
-
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">
-            Multi-View Pose-Agnostic Scene Change Detection with Zero Labels  <br>
-          </h1>
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="">Chamuditha Jayanga  </a><sup>1,2</sup>,</span>
-            <span class="author-block">
-              <a href="">Jason Lai  </a><sup>3</sup>,</span>
-            <span class="author-block">
-              <a href="">Lloyd Windrim  </a><sup>2,4</sup>,
-            </span>
-            <span class="author-block">
-              <a href="">Donald Dansereau  </a><sup>2,3</sup>,
-            </span>
-            <span class="author-block">
-              <a href="">Niko Suenderhauf  </a><sup>1,2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="">Dimity Miller  </a><sup>1,2</sup>
-            </span>
-          </div>
-
-          <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>QUT Centre for Robotics, &nbsp;  </span>
-            <span class="author-block"><sup>2</sup>ARIAM Hub, &nbsp;   </span>
-            <span class="author-block"><sup>3</sup>ACFR, University of Sydney, &nbsp;   </span>
-            <span class="author-block"><sup>4</sup>Abyss Solutions</span>
-          </div>
-
-          <div class="is-size-6 publication-authors">
-            <span class="gradient-text">CVPR 2025</span>
-          </div>
-
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
           <div class="column has-text-centered">
-            <div class="publication-links">
-              <!-- PDF Link. -->
-              <span class="link-block">
-                <a href="https://arxiv.org/pdf/2412.03911"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper</span>
-                </a>
+            <h1 class="title is-1 publication-title">
+              FedVG: Gradient-Guided Aggregation for Enhanced Federated
+              Learning <br>
+            </h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://alinadevkota.github.io/">Alina Devkota
+                </a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="https://www.jacobthrasher.net/">Jacob Thrasher
+                </a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="https://community.wvu.edu/~daadjeroh/">Donald
+                  Adjeroh </a><sup>1</sup>,
               </span>
-              <span class="link-block">
-                <a href="https://arxiv.org/abs/2412.03911"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
+              <span class="author-block">
+                <a href="https://sites.google.com/view/bbinod/home">Binod
+                  Bhattarai </a><sup>2</sup>,
               </span>
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href="https://github.com/Chumsy0725/MV3DCD"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
-                  </a>
+              <span class="author-block">
+                <a href="https://pkgyawali.com/">Prashnna K. Gyawali
+                </a><sup>1</sup>,
               </span>
-              <!-- Video Link. -->
-              
-              <!-- Dataset Link. -->
-              <span class="link-block">
-                <a href="https://huggingface.co/datasets/ChamudithaJay/PASLCD/tree/main"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="far fa-images"></i>
-                  </span>
-                  <span>Dataset</span>
-                  </a>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>West Virginia
+                University, &nbsp; </span>
+              <span class="author-block"><sup>2</sup>University of Aberdeen
               </span>
+            </div>
+
+            <div class="is-size-6 publication-authors">
+              <span class="gradient-text">CVPR 2026 (Findings)</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
                 <span class="link-block">
-                <a href="https://chumsy0725.github.io/O-SCD/"
+                  <a href="https://arxiv.org/pdf/id" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper (Coming Soon!)</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2412.03911" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv (Coming Soon!)</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/alinadevkota/FedVG"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <!-- <span class="link-block">
+                <a href="https://alinadevkota.github.io/"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fas fa-file-pdf"></i>
                   </span>
                   <span>New Work: Online SCD</span>
                 </a>
-              </span>
+              </span> -->
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-centered has-text-centered">
+      <div class="columns is-four-fifths is-centered">
+        <div class="column is-10">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-centered ">
+            <p style="text-align: justify;">
+              Federated Learning (FL) enables collaborative model training
+              across multiple clients without sharing their private data.
+              However, data heterogeneity across clients leads to client
+              drift, which degrades the overall generalization performance
+              of the model.
+              This effect is further compounded by overemphasis on poorly
+              performing clients.
+              To address this problem, we propose FedVG, a novel
+              gradient-based federated aggregation framework that leverages
+              a global validation set to guide the optimization process.
+              Such a global validation set can be established using readily
+              available public datasets, ensuring accessibility and
+              consistency across clients without compromising privacy.
+              In contrast to conventional approaches that prioritize client
+              dataset volume, FedVG assesses the generalization ability of
+              client models by measuring the magnitude of validation
+              gradients across layers.
+              Specifically, we compute layerwise gradient norms to derive a
+              client-specific score that reflects how much each client needs
+              to adjust for improved generalization on the global validation
+              set, thereby enabling more informed and adaptive federated
+              aggregation. Extensive experiments on both natural and medical
+              image benchmarking datasets, across diverse model
+              architectures, demonstrate that FedVG consistently improves
+              performance, particularly in highly heterogeneous settings.
+              Moreover, FedVG is modular and can be seamlessly integrated
+              with various state-of-the-art FL algorithms, often further
+              improving their results.
+            </p>
+
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- Method section -->
+  <section class="section" style="padding: 30px 0; background-color: #eceef1; position: relative;">
+    <div class="container is-centered has-text-centered">
+      <div class="columns is-four-fifths is-centered">
+        <div class="column is-10">
+          <h2 class="title is-3">Overview</h2>
+          <div class="content has-text-centered">
+            <p>
+              <img src="./static/images/method.png" alt="Method Diagram" class="centered-image"
+                style="max-width: 100%; height: auto;">
+            </p>
+            <p>
+              An overview of our proposed approach FedVG framework.
+              Locally trained client models, which converge to varying
+              points, are sent to the server. A global validation
+              set is used to compute their validation gradients, obtain
+              client scores $s_k$ , and form a global model by weighted
+              sum. Individual client
+              updates are represented as dotted lines in the loss
+              landscape on the right, while aggregated models are solid.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+    <section id="scene-carousel"  style="padding: 20px 20px 50px 20px;">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+
+          <!-- Slide 1: Playground -->
+          <div class="swiper-slide has-text-centered">
+            <h3 class="title is-5" style="margin-bottom: 10px;">CIFAR-10
+              class distributions across 100 clients at different heterogeneity levels</h3>
+            <div class="images-row">
+              <div><img src="static/images/dists/cifar10_a100.png" alt="Alpha = 100"></div>
+              <div><img src="static/images/dists/cifar10_a10.png" alt="Alpha = 10"></div>
+              <div><img src="static/images/dists/cifar10_a1.png" alt="Alpha = 1"></div>
+              <div><img src="static/images/dists/cifar10_a0.1.png" alt="Alpha = 0.1"></div>
+              <div><img src="static/images/dists/cifar10_a0.05.png" alt="Alpha = 0.05"></div>
+            </div>
+          </div>
+
+          <!-- Slide 2: Printing Area -->
+          <div class="swiper-slide has-text-centered">
+            <h3 class="title is-5" style="margin-bottom: 10px;">COVID19
+              class distributions across 20 clients at different heterogeneity levels</h3>
+            <div class="images-row">
+              <div><img src="static/images/dists/covid19_a100.png" alt="Alpha = 100"></div>
+              <div><img src="static/images/dists/covid19_a10.png" alt="Alpha = 10"></div>
+              <div><img src="static/images/dists/covid19_a1.png" alt="Alpha = 1"></div>
+              <div><img src="static/images/dists/covid19_a0.1.png" alt="Alpha = 0.1"></div>
+              <div><img src="static/images/dists/covid19_a0.05.png" alt="Alpha = 0.05"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Navigation Arrows -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        <!-- Pagination -->
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+  </section>
+
+
+  <section id="scene-carousel-sbs" style="padding: 50px 0; background-color: #eceef1;">
+    <div class="container is-four-fifths is-centered has-text-centered">
+      <h2 class="title is-3" style="padding: 7px 0;">Results at Varying Degree of Heterogeneity Across Different Datasets</h2>
+    </div>
+    <section id="scene-carousel"  style="padding: 20px 20px 50px 20px;">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+
+          <!-- Slide 1: Playground -->
+          <div class="swiper-slide has-text-centered">
+            <h3 class="title is-5" style="margin-bottom: 10px;">Results for ResNet-based Architectures</h3>
+            <div class="image-block">
+              <div class="y-label">Test Accuracy (%)</div>
+              <div class="images-row" style="max-width: 1600px;">
+                <div><img src="static/images/results/results_cifar10_res18_v2.png" alt=""></div>
+                <div><img src="static/images/results/results_medmnistA_res18_v2.png" alt=""></div>
+                <div><img src="static/images/results/results_tiny_imagenet_res50_v2.png" alt=""></div>
+                <div><img src="static/images/results/results_covid19_res50_v2.png" alt=""></div>
+                <div><img src="static/images/results/results_dermamnist_res50_v2.png" alt=""></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide has-text-centered">
+            <h3 class="title is-5" style="margin-bottom: 10px; ">Results for Transformer-based Architectures</h3>
+            <!-- <div class="image-block" style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+              <div class="y-label">Test Accuracy (%)</div>
+              <div class="images-row" style="max-width: 1600px; max-height: 300px;">
+                <div><img src="static/images/results/results_covid19_vit_s_16_v2.png" alt=""></div>
+                <div><img src="static/images/results/results_dermamnist_vitb_v2.png" alt=""></div>
+              </div>
+            </div> -->
+            <div class="image-block" style="position: relative; display: inline-block;">
+
+              <!-- Y-label, absolutely positioned -->
+              <div class="y-label" style="
+                   position: absolute;
+                   left: -30px; /* adjust gap to match image spacing */
+                   top: 25%;
+                   transform: rotate(180deg); 
+                   writing-mode: vertical-rl;
+                   text-orientation: mixed;
+                   font-weight: bold;
+                   white-space: nowrap;
+                   ">
+                Test Accuracy (%)
+              </div>
+          
+              <!-- Images row -->
+              <div class="images-row" style="display: flex; gap: 20px;">
+                <div><img src="static/images/results/results_covid19_vit_s_16_v2.png" alt="" style="height: 300px;"></div>
+                <div><img src="static/images/results/results_dermamnist_vitb_v2.png" alt="" style="height: 300px;"></div>
+              </div>
+          
             </div>
 
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-
-<section class="section">
-  <div class="container is-centered has-text-centered">
-    <div class="columns is-four-fifths is-centered">
-      <div class="column is-10">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-centered ">
-          <p>
-            Autonomous agents often require accurate methods for detecting and localizing changes in their environment, 
-            particularly when observations are captured from unconstrained and inconsistent viewpoints. We propose a novel label-free, pose-agnostic 
-            scene change detection method that integrates information from multiple viewpoints to construct a change-aware 3D Gaussian Splatting (3DGS) 
-            representation of the scene. With as few as 5 images of the post-change scene, our approach can learn an additional change channel in a 
-            3DGS and produce change masks that outperform single-view techniques. Our change-aware 3D scene representation additionally enables the 
-            generation of accurate change masks for unseen viewpoints. Experimental results demonstrate state-of-the-art performance in complex 
-            multi-object scenes, achieving a <b>1.7</b>x and <b>1.6</b>x improvement in Mean Intersection Over Union and F1 score 
-            respectively over other baselines. 
-            We also contribute a new real-world dataset to benchmark change detection in diverse challenging scenes in the presence of lighting variations.
-          </p>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="results-carousel" style="padding: 30px 0; background-color: #f8f9fa; position: relative;">
-  <!-- <div class="container has-text-centered">
-    <h2 class="title is-3" style="margin-bottom: 30px;">Results Comparison</h2>
-  </div> -->
-  <div class="swiper-container">
-      <div class="swiper-wrapper">
-          <!-- Slide 1 -->
-          <div class="swiper-slide">
-              <div style="display: flex; flex-direction: column; align-items: center;">
-                  <!-- <h3 class="title is-5" style="margin-bottom: 10px;">Result 1</h3> -->
-                  <div class="b-dics" style="width: 800px; text-align: center;">
-                      <img src="static/images/Cantina/reference_nf.gif" alt="Reference Scene (Rendered)">
-                      <img src="static/images/Cantina/mask_nf.gif" alt="Change Mask (Rendered)">
-                      <img src="static/images/Cantina/inference_nf.gif" alt="Inference Scene (Rendered)">
-                  </div>
-              </div>
           </div>
 
-          <!-- Slide 2 -->
-          <div class="swiper-slide">
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <!-- <h3 class="title is-5" style="margin-bottom: 10px;">Result 1</h3> -->
-                <div class="b-dics" style="width: 800px; text-align: center;">
-                    <img src="static/images/Zen/reference_nf.gif" alt="Reference Scene (Rendered)">
-                    <img src="static/images/Zen/mask_nf.gif" alt="Change Mask (Rendered)">
-                    <img src="static/images/Zen/inference_nf.gif" alt="Inference Scene (Rendered)">
-                </div>
-            </div>
         </div>
 
-          <!-- Slide 3 -->
-          <div class="swiper-slide">
-              <div style="display: flex; flex-direction: column; align-items: center;">
-                  <!-- <h3 class="title is-5" style="margin-bottom: 10px;">Result 2</h3> -->
-                  <div class="b-dics" style="width: 800px; text-align: center;">
-                      <img src="static/images/Lounge/reference_nf.gif" alt="Reference Scene (Rendered)">
-                      <img src="static/images/Lounge/mask_nf.gif" alt="Change Mask (Rendered)">
-                      <img src="static/images/Lounge/inference_nf.gif" alt="Inference Scene (Rendered)">
-                  </div>
-              </div>
-          </div>
-
-          <!-- Slide 4 -->
-          <div class="swiper-slide">
-              <div style="display: flex; flex-direction: column; align-items: center;">
-                  <!-- <h3 class="title is-5" style="margin-bottom: 10px;">Result 3</h3> -->
-                  <div class="b-dics" style="width: 800px; text-align: center;">
-                      <img src="static/images/Pots/reference_nf.gif" alt="Reference Scene (Rendered)">
-                      <img src="static/images/Pots/mask_nf.gif" alt="Change Mask (Rendered)">
-                      <img src="static/images/Pots/inference_nf.gif" alt="Inference Scene (Rendered)">
-                  </div>
-              </div>
-          </div>
-
-          <!-- Slide 5 -->
-          <div class="swiper-slide">
-              <div style="display: flex; flex-direction: column; align-items: center;">
-                  <!-- <h3 class="title is-5" style="margin-bottom: 10px;">Result 3</h3> -->
-                  <div class="b-dics" style="width: 800px; text-align: center;">
-                      <img src="static/images/Printing_area/reference_nf.gif" alt="Reference Scene (Rendered)">
-                      <img src="static/images/Printing_area/mask_nf.gif" alt="Change Mask (Rendered)">
-                      <img src="static/images/Printing_area/inference_nf.gif" alt="Inference Scene (Rendered)">
-                  </div>
-              </div>
-          </div>
+        <!-- Navigation Arrows -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        <!-- Pagination -->
+        <div class="swiper-pagination"></div>
       </div>
-
-      <!-- Pagination Dots -->
-      <div class="swiper-pagination"></div>
-
-      <!-- Navigation Arrows -->
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
-  </div>
-   <div class="container has-text-centered" style="margin-top: 20px;">
-    <p class="is-size-6">
-       Images of the reference scene, inference scene, and the change masks are <strong>rendered</strong> from our "<em>Change-Aware 3DGS</em>" representation following a random trajectory which includes <strong>unseen viewpoints</strong>.
-    </p>
-  </div>
-</section>
+    </section>
+  </section>
 
 
-<!-- Method section -->
-<section class="section">
-  <div class="container is-centered has-text-centered">
-    <div class="columns is-four-fifths is-centered">
-      <div class="column is-10">
-        <h2 class="title is-3">Overview</h2>
-        <div class="content has-text-centered">
-          <p>
-            <img src="./static/images/method.jpg" alt="Method Diagram" class="centered-image" style="max-width: 100%; height: auto;">
+
+  <section style="padding: 50px 0;">
+    <div class="container is-four-fifths is-centered has-text-centered">
+      <h2 class="title is-3" style="padding: 7px 0;">Modular Integration with Baselines</h2>
+      <!-- Flex container for image + text -->
+      <div class="image-text-row" style="display: flex; flex-wrap: wrap; align-items: center; gap: 30px; margin-top: 30px;">
+        
+        <!-- Right: Text -->
+        <div class="text-column" style="flex: 1 1 400px; min-width: 300px;">
+          <p style="font-size: 1rem; line-height: 1.5; color: #333;">
+            FedVG’s modular design allows it to enhance existing federated learning algorithms by incorporating validation-gradient-based weighting during server-side aggregation. Experiments show that integrating FedVG with baselines like FedAvg, FedProx, and Elastic consistently improves performance, particularly under high heterogeneity, without modifying client-side updates. These results highlight FedVG’s versatility as a complementary module that can boost a wide range of FL strategies.
           </p>
-          <p>
-            An overview of our proposed approach for multi-view pose-agnostic change detection. 
-            We leverage a 3DGS representation of the pre-change (<em>reference</em>) scene to build 
-            feature and structure-aware change masks given images of the post-change (<em>inference</em>) scene. 
-            We embed this information as additional change channels into the representation, which can be used to render multi-view change masks.
+        </div>
+
+        <!-- Left: Image -->
+        <div class="image-column" style="flex: 1 1 400px; min-width: 300px;">
+          <img src="static/images/results/fedgrad_combined_matrix.png" alt="FedGrad Integration Matrix" style="width: 100%; height: auto; display: block;">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 50px 0; background-color: #eceef1;"> 
+    <div class="container is-four-fifths is-centered has-text-centered">
+      <h2 class="title is-3" style="padding: 7px 0;">Ablation on Global Validation Set</h2>
+
+      
+      <!-- Flex container for image + text -->
+      <div class="image-text-row" style="display: flex; flex-wrap: wrap; align-items: center; gap: 30px; margin-top: 30px;">
+        
+        <div class="text-column" style="flex: 1 1 400px; min-width: 300px;">
+          <h3 class="title is-5" style="padding: 7px 0;">1. External Public Dataset as Global Validation Set</h3>
+          <p style="font-size: 1rem; line-height: 1.5; color: #333;">
+            We evaluated FedVG on CIFAR-10 using external validation sets from STL-10 and CIFAR-100, selected for overlapping classes and imaging context. Small validation sets were sampled (3,650 from CIFAR-100 and 4,950 from STL-10) to test robustness under distribution shifts. Across high heterogeneity settings ($\alpha = 0.1, 0.05$), FedVG consistently outperformed baseline methods, achieving accuracies up to 61.1%, demonstrating its ability to maintain strong performance even when validated on data outside the training distribution.
+          </p>
+        </div>
+        <div class="image-column" style="flex: 1 1 400px; min-width: 300px;">
+          <img src="static/images/results/results_realistic_cifar10.png" alt="FedGrad Integration Matrix" style="width: 100%; height: auto; display: block;">
+        </div>
+
+      </div>
+<br>
+      
+      <!-- <div class="image-text-row" style="display: flex; flex-wrap: wrap; align-items: center; gap: 30px; margin-top: 30px;">
+        <div class="image-column" style="flex: 1 1 400px; min-width: 300px;">
+          <img src="static/images/results/fedgrad_imbalance_ablation.png" alt="FedGrad Integration Matrix" style="width: 100%; height: auto; display: block;">
+        </div>
+        <div class="text-column" style="flex: 1 1 400px; min-width: 300px;">
+          <h3 class="title is-5" style="padding: 7px 0;">2. Impact of Imbalanced Global Validation Set</h3>
+          <p style="font-size: 1rem; line-height: 1.5; color: #333;">
+            We evaluate FedVG under class-imbalanced global validation sets to simulate real-world distribution shifts, where client data distributions are unknown. Even as the class imbalance ratio decreases, FedVG consistently outperforms FedAvg, demonstrating its robustness to varying validation set compositions and highlighting its effectiveness under realistic, imbalanced scenarios.
           </p>
         </div>
       </div>
+      <div class="images-row" style="max-width: 500px;">
+        <div><img src="static/images/results/valset_class_distribution_rho1.0.png" alt=""></div>
+        <div><img src="static/images/results/valset_class_distribution_rho0.75.png" alt=""></div>
+        <div><img src="static/images/results/valset_class_distribution_rho0.5.png" alt=""></div>
+        <div><img src="static/images/results/valset_class_distribution_rho0.25.png" alt=""></div>
+      </div> -->
+
+      <section style="padding: 50px 20px; background-color: #f8f9fa;">
+        <!-- Image + Text Row -->
+        <div class="image-text-row" style="display: flex; flex-wrap: wrap; align-items: center; gap: 30px; margin-bottom: 30px;">
+          <div class="image-column" style="flex: 1 1 400px; min-width: 300px;">
+            <img src="static/images/results/fedgrad_imbalance_ablation.png" alt="FedGrad Integration Matrix" style="width: 100%; height: auto; display: block;">
+          </div>
+          <div class="text-column" style="flex: 1 1 400px; min-width: 300px;">
+            <h3 class="title is-5" style="padding: 7px 0;">2. Impact of Imbalanced Global Validation Set</h3>
+            <p style="font-size: 1rem; line-height: 1.5; color: #333;">
+              We evaluate FedVG under class-imbalanced global validation sets to simulate real-world distribution shifts, where client data distributions are unknown. Even as the class imbalance ratio decreases, FedVG consistently outperforms FedAvg, demonstrating its robustness to varying validation set compositions and highlighting its effectiveness under realistic, imbalanced scenarios.
+            </p>
+          </div>
+        </div>
+      
+        <!-- Five Images Row -->
+        <div class="images-row" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <div style="flex: 1 1 150px; min-width: 120px;">
+            <img src="static/images/results/valset_class_distribution_rho1.0.png"  style="width: 100%; height: auto; display: block;">
+          </div>
+          <div style="flex: 1 1 150px; min-width: 120px;">
+            <img src="static/images/results/valset_class_distribution_rho0.75.png"  style="width: 100%; height: auto; display: block;">
+          </div>
+          <div style="flex: 1 1 150px; min-width: 120px;">
+            <img src="static/images/results/valset_class_distribution_rho0.5.png"  style="width: 100%; height: auto; display: block;">
+          </div>
+          <div style="flex: 1 1 150px; min-width: 120px;">
+            <img src="static/images/results/valset_class_distribution_rho0.25.png"  style="width: 100%; height: auto; display: block;">
+          </div>
+        </div>
+      </section>
     </div>
-  </div>
-</section>
-
-
-<section id="scene-carousel" style="padding: 50px 0; background-color: #f8f9fa; position: relative;">
-  <div class="container has-text-centered">
-    <h2 class="title is-3" style="margin-bottom: 30px;">PASLCD Dataset</h2>
-  </div>
-  <div class="swiper-container">
-      <div class="swiper-wrapper">
-          <!-- Scene 1: Playground -->
-          <div class="swiper-slide">
-              <div style="display: flex; flex-direction: column; align-items: center;">
-                  <h3 class="title is-5" style="margin-bottom: 10px;">Playground</h3>
-                  <div class="b-dics" style="width: 750px; text-align: center;">
-                      <img src="static/images/Playground/Inst_1_test_IMG_E7024_r.png" alt="Reference Scene (Rendered)">
-                      <img src="static/images/Playground/Inst_1_test_IMG_E7024_q.png" alt="Inference Scene">
-                  </div>
-              </div>
-          </div>
-
-          <!-- Scene 2: Printing Area -->
-          <div class="swiper-slide">
-              <div style="display: flex; flex-direction: column; align-items: center;">
-                  <h3 class="title is-5" style="margin-bottom: 10px;">Printing Area</h3>
-                  <div class="b-dics" style="width: 750px; text-align: center;">
-                      <img src="static/images/Printing_area/Inst_2_test_IMG_2221_r.png" alt="Reference Scene (Rendered)">
-                      <img src="static/images/Printing_area/Inst_2_test_IMG_2221_q.png" alt="Inference Scene">
-                  </div>
-              </div>
-          </div>
-
-          <!-- Scene 3: Garden -->
-          <div class="swiper-slide">
-              <div style="display: flex; flex-direction: column; align-items: center;">
-                  <h3 class="title is-5" style="margin-bottom: 10px;">Garden</h3>
-                  <div class="b-dics" style="width: 750px; text-align: center;">
-                      <img src="static/images/Garden/Inst_1_test_IMG_E7272_r.png" alt="Reference Scene (Rendered)">
-                      <img src="static/images/Garden/Inst_1_test_IMG_E7272_q.png" alt="Inference Scene">
-                  </div>
-              </div>
-          </div>
-
-          <!-- Scene 4: Lounge -->
-          <div class="swiper-slide">
-              <div style="display: flex; flex-direction: column; align-items: center;">
-                  <h3 class="title is-5" style="margin-bottom: 10px;">Lounge</h3>
-                  <div class="b-dics" style="width: 750px; text-align: center;">
-                      <img src="static/images/Lounge/Inst_2_test_IMG_3842_q.png" alt="Reference Scene (Rendered)">
-                      <img src="static/images/Lounge/Inst_2_test_IMG_3842_r.png" alt="Inference Scene">
-                  </div>
-              </div>
-          </div>
-
-          <!-- Scene 5: Porch -->
-          <div class="swiper-slide">
-              <div style="display: flex; flex-direction: column; align-items: center;">
-                  <h3 class="title is-5" style="margin-bottom: 10px;">Porch</h3>
-                  <div class="b-dics" style="width: 750px; text-align: center;">
-                      <img src="static/images/Porch/Inst_1_test_IMG_E6648_r.png" alt="Reference Scene (Rendered)">
-                      <img src="static/images/Porch/Inst_1_test_IMG_E6648_q.png" alt="Inference Scene">
-                  </div>
-              </div>
-          </div>
-
-          <!-- Scene 6: Meeting Room -->
-          <div class="swiper-slide">
-              <div style="display: flex; flex-direction: column; align-items: center;">
-                  <h3 class="title is-5" style="margin-bottom: 10px;">Meeting Room</h3>
-                  <div class="b-dics" style="width: 750px; text-align: center;">
-                      <img src="static/images/Meeting_room/Inst_2_test_IMG_1871_r.png" alt="Reference Scene (Rendered)">
-                      <img src="static/images/Meeting_room/Inst_2_test_IMG_1871_q.png" alt="Inference Scene">
-                  </div>
-              </div>
-          </div>
-
-          <!-- Scene 7: Pots -->
-          <div class="swiper-slide">
-              <div style="display: flex; flex-direction: column; align-items: center;">
-                  <h3 class="title is-5" style="margin-bottom: 10px;">Pots</h3>
-                  <div class="b-dics" style="width: 750px; text-align: center;">
-                      <img src="static/images/Pots/Inst_1_test_IMG_E2716_r.png" alt="Reference Scene (Rendered)">
-                      <img src="static/images/Pots/Inst_1_test_IMG_E2716_q.png" alt="Inference Scene">
-                  </div>
-              </div>
-          </div>
-
-          <!-- Scene 8: Cantina -->
-          <div class="swiper-slide">
-              <div style="display: flex; flex-direction: column; align-items: center;">
-                  <h3 class="title is-5" style="margin-bottom: 10px;">Cantina</h3>
-                  <div class="b-dics" style="width: 750px; text-align: center;">
-                      <img src="static/images/Cantina/Inst_2_test_IMG_2909_r.png" alt="Reference Scene (Rendered)">
-                      <img src="static/images/Cantina/Inst_2_test_IMG_2909_q.png" alt="Inference Scene">
-                  </div>
-              </div>
-          </div>
-
-          <!-- Scene 9: Zen -->
-          <div class="swiper-slide">
-              <div style="display: flex; flex-direction: column; align-items: center;">
-                  <h3 class="title is-5" style="margin-bottom: 10px;">Zen</h3>
-                  <div class="b-dics" style="width: 750px; text-align: center;">
-                      <img src="static/images/Zen/Inst_1_test_IMG_E2799_r.png" alt="Reference Scene (Rendered)">
-                      <img src="static/images/Zen/Inst_1_test_IMG_E2799_q.png" alt="Inference Scene">
-                  </div>
-              </div>
-          </div>
-
-          <!-- Scene 10: Lunch Room -->
-          <div class="swiper-slide">
-              <div style="display: flex; flex-direction: column; align-items: center;">
-                  <h3 class="title is-5" style="margin-bottom: 10px;">Lunch Room</h3>
-                  <div class="b-dics" style="width: 750px; text-align: center;">
-                      <img src="static/images/Lunch_room/Inst_2_test_IMG_3521_r.png" alt="Reference Scene (Rendered)">
-                      <img src="static/images/Lunch_room/Inst_2_test_IMG_3521_q.png" alt="Inference Scene">
-                  </div>
-              </div>
-          </div>
-      </div>
-
-      <!-- Pagination Dots -->
-      <div class="swiper-pagination"></div>
-
-      <!-- Navigation Arrows -->
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
-  </div>
-</section>
-
-
-
+  </section>
 
 
   <!-- Swiper CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  
-<style>
-/* Center Swiper Navigation Buttons */
-.swiper-button-prev,
-.swiper-button-next {
-  top: 50%; 
-  transform: translateY(-50%);
-  color: #000; /* Change arrow color if needed */
-}
-</style>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const swiper = new Swiper('#scene-carousel .swiper-container', {
-      loop: true, // Infinite loop
-      navigation: {
+  <style>
+    /* Center Swiper Navigation Buttons */
+    .swiper-button-prev,
+    .swiper-button-next {
+      top: 50%;
+      transform: translateY(-50%);
+      color: #000;
+      /* Change arrow color if needed */
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const swiper = new Swiper('#scene-carousel .swiper-container', {
+        loop: true, // Infinite loop
+        navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
-      },
-      pagination: {
+        },
+        pagination: {
           el: '.swiper-pagination',
           clickable: true,
-      },
-      touchStartPreventDefault: false, // Allow other interactions
-  });
+        },
+        touchStartPreventDefault: false, // Allow other interactions
+      });
 
-  // Disable Swiper when interacting with the image slider
-  document.querySelectorAll('.b-dics').forEach(element => {
-      element.addEventListener('mouseenter', () => swiper.allowTouchMove = false);
-      element.addEventListener('mouseleave', () => swiper.allowTouchMove = true);
-  });
-});
-</script>
+      // Disable Swiper when interacting with the image slider
+      document.querySelectorAll('.b-dics').forEach(element => {
+        element.addEventListener('mouseenter', () => swiper.allowTouchMove = false);
+        element.addEventListener('mouseleave', () => swiper.allowTouchMove = true);
+      });
+    });
+  </script>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const swiper = new Swiper('#results-carousel .swiper-container', {
-      loop: true, // Infinite loop
-      navigation: {
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const swiper = new Swiper('#results-carousel .swiper-container', {
+        loop: true, // Infinite loop
+        navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
-      },
-      pagination: {
+        },
+        pagination: {
           el: '.swiper-pagination',
           clickable: true,
-      },
-      touchStartPreventDefault: false, // Allow other interactions
-  });
+        },
+        touchStartPreventDefault: false, // Allow other interactions
+      });
 
-  // Disable Swiper when interacting with the image slider
-  document.querySelectorAll('.b-dics').forEach(element => {
-      element.addEventListener('mouseenter', () => swiper.allowTouchMove = false);
-      element.addEventListener('mouseleave', () => swiper.allowTouchMove = true);
-  });
-});
-</script>
+      // Disable Swiper when interacting with the image slider
+      document.querySelectorAll('.b-dics').forEach(element => {
+        element.addEventListener('mouseenter', () => swiper.allowTouchMove = false);
+        element.addEventListener('mouseleave', () => swiper.allowTouchMove = true);
+      });
+    });
+  </script>
 
-
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title has-text-centered">BibTeX</h2>
-    <pre><code>@inproceedings{galappaththige2025multi,
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title has-text-centered">BibTeX</h2>
+      <pre><code>Coming Soon!</code></pre>
+      <!-- <pre><code>@inproceedings{galappaththige2025multi,
   title={Multi-View Pose-Agnostic Change Localization with Zero Labels},
   author={Galappaththige, Chamuditha Jayanga and Lai, Jason and Windrim, Lloyd and Dansereau, Donald and Sunderhauf, Niko and Miller, Dimity},
   booktitle={Proceedings of the Computer Vision and Pattern Recognition Conference},
   pages={11600--11610},
   year={2025}
-}</code></pre>
-  </div>
-</section>
+}</code></pre> -->
+    </div>
+  </section>
 
-
-
-<!-- Acknowledgement section -->
-<section class="section">
-  <div class="container is-centered has-text-centered">
-    <div class="columns is-four-fifths is-centered">
-      <div class="column is-10">
-        <h2 class="title is-4">Acknowledgement</h2>
-        <div class="content has-text-centered is-size-6">
-          <p>
-            This work was supported by the ARC Research Hub in Intelligent Robotic Systems for Real-Time Asset Management (IH210100030) 
-            and Abyss Solutions. C.J., N.S., and D.M. also acknowledge ongoing support from the QUT Centre for Robotics.
-          </p>
+  <!-- Acknowledgement section -->
+  <section class="section">
+    <div class="container is-centered has-text-centered">
+      <div class="columns is-four-fifths is-centered">
+        <div class="column is-10">
+          <h2 class="title is-4">Acknowledgement</h2>
+          <div class="content has-text-centered is-size-6">
+            <p>
+              This material is based upon work supported by the National
+              Science Foundation (NSF) under Grant No. 2119654. Any
+              opinions, findings, conclusions, or recommendations
+              expressed in this material are those of the author(s) and do
+              not necessarily reflect the views of the NSF. We also
+              recognize the computational resources provided by the WVU
+              Research Computing Dolly Sods HPC cluster, which is funded
+              in part by NSF OAC-2117575.
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer class="footer centered-footer">
-  <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License.</a> This website template is from <a
-            href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>. The image comparisson slider is taken from <a href="https://github.com/abelcabezaroman/definitive-image-comparison-slider">definitive-image-comparison-slider</a>. We sincerely thank authors for developing and open-sourcing these templates. 
-          </p>
+  <footer class="footer centered-footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                Commons Attribution-ShareAlike 4.0 International
+                License.</a> This template is provided by <a
+                href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>, and we sincerely thank the authors for developing and open-sourcing it.
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</footer>
+  </footer>
 
+  <script>
+    document.querySelectorAll('.images-row img').forEach(img => {
+      const t = img.getAttribute('alt');
+      if (!t) return;
 
+      const label = document.createElement('div');
+      label.className = 'b-dics__text';
+      label.textContent = t;
 
+      img.parentElement.style.position = 'relative';
+      img.parentElement.appendChild(label);
+    });
+  </script>
 
 </body>
+
 </html>
