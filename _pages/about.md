@@ -26,9 +26,9 @@ Looking ahead, I plan to concentrate future research at the intersection of adva
 
 News
 ======
-- **[2026]** Currently I am serving as the Web and Publicity Chair for the **4th DEMI Workshop at MICCAI 2026**.
-- **[2026]** Received **2nd place** in the Rapid Fire Presentation at **Statler College Research Week**.
-- **[2026]** Our paper, *FedVG: Gradient-Guided Aggregation for Enhanced Federated Learning*, has been accepted to **CVPR Findings 2026**.
-- **[2025]** I served as the lecturer for the **WVU SURE Generative AI Workshop**.
-- **[2025]** I received **2nd place** in the poster presentation at the **WVU AI Symposium**.
-- **[2025]** Our paper, *AI Analysis for Ejection Fraction Estimation from 12-Lead ECG*, was published in **Scientific Reports**.
+- **[2026]** Currently, I am serving as the Web and Publicity Chair for the **[4th DEMI Workshop at MICCAI 2026](https://demi-workshop.github.io/)**.
+- **[2026]** Received **2nd place** in the Rapid Fire Presentation at **[Statler College Research Week](https://your-link-here)**.
+- **[2026]** Our paper, *[FedVG: Gradient-Guided Aggregation for Enhanced Federated Learning](https://arxiv.org/abs/2602.21399)*, has been accepted to **CVPR Findings 2026**.
+- **[2025]** I served as the lecturer for the **[WVU SURE Generative AI Workshop](https://www.linkedin.com/posts/prashnna-k-gyawali_generativeai-reliableai-aieducation-activity-7349619059082084352-xlRh)**.
+- **[2025]** I received **2nd place** in the poster presentation at the **[WVU AI Symposium](https://hsc.wvu.edu/research-and-graduate-education/wvu-ai-symposium/)**.
+- **[2025]** Our paper, *[AI Analysis for Ejection Fraction Estimation from 12-Lead ECG](https://www.nature.com/articles/s41598-025-97113-0)*, was published in **Scientific Reports**.
