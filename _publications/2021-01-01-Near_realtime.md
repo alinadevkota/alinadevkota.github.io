@@ -8,6 +8,7 @@ date: 2021-01-01
 venue: 'ICMSI'
 paperurl: 'https://www.researchgate.net/profile/Nanda-Adhikari/publication/353701660_Near_Real-Time_Mobile_Profiling_and_Modeling_of_Fine-Scale_Environmental_Proxies_Along_Major_Road_Lines_of_Nepal/links/610b76a4169a1a0103dde797/Near-Real-Time-Mobile-Profiling-and-Modeling-of-Fine-Scale-Environmental-Proxies-Along-Major-Road-Lines-of-Nepal.pdf'
 citation: 'Adhikari, N.B., Gautam, S., Devkota, A., Shikha, S., Pyakurel, S. and Adhikari, M.P., 2020, January. Near Real-Time Mobile Profiling and Modeling of Fine-Scale Environmental Proxies Along Major Road Lines of Nepal. In International Conference on Mobile Computing and Sustainable Informatics (pp. 605-617). Cham: Springer International Publishing.'
+teaser: images/publications/nasco_teaser.png
 ---
 
 <a href='https://www.researchgate.net/profile/Nanda-Adhikari/publication/353701660_Near_Real-Time_Mobile_Profiling_and_Modeling_of_Fine-Scale_Environmental_Proxies_Along_Major_Road_Lines_of_Nepal/links/610b76a4169a1a0103dde797/Near-Real-Time-Mobile-Profiling-and-Modeling-of-Fine-Scale-Environmental-Proxies-Along-Major-Road-Lines-of-Nepal.pdf'>Download paper here</a>
