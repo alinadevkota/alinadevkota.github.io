@@ -1,0 +1,33 @@
+# Jekyll build output and caches
+/_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+.asset-cache/
+
+# Ruby / Bundler
+# Gemfile.lock is ignored because GitHub Pages builds with its own pinned
+# gem versions; a lockfile from a local machine can conflict with theirs.
+Gemfile.lock
+/.bundle/
+/vendor/
+
+# Node
+/node_modules/
+
+# Python (markdown_generator/, scripts/, talkmap.py)
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*~
