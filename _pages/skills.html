@@ -1,13 +1,190 @@
 ---
 layout: archive
 permalink: /skills/
-title: "Technical Skills"
+title: "Skills"
 author_profile: true
 ---
 
-<ul class="skills-list">
-    <li><strong>Programming:</strong> Python <span class="expert">(Expert)</span> | C, C++, JavaScript <span class="intermediate">(Intermediate)</span> | MATLAB <span class="beginner">(Beginner)</span></li>
-    <li><strong>Machine Learning &amp; Deep Learning:</strong> PyTorch, Scikit-learn, OpenCV <span class="expert">(Expert)</span> | Huggingface, Transformers, Foundation Models <span class="intermediate">(Intermediate)</span> | TensorFlow, LLM <span class="beginner">(Beginner)</span></li>
-    <li><strong>Data Analysis &amp; Visualization:</strong> NumPy, Pandas, Matplotlib <span class="expert">(Expert)</span></li>
-    <li><strong>Software &amp; Tools:</strong> Git/GitHub, ClickUp <span class="expert">(Expert)</span> | Jira, Docker, AWS, FastAPI, Django <span class="intermediate">(Intermediate)</span> | REST APIs, SQL, MongoDB <span class="beginner">(Beginner)</span></li>
-</ul>
+<style>
+/* Scoped to this page only. Theme --global-* custom properties are used where
+   they exist; the accent tints are rgba overlays, which sit correctly on both
+   the light and dark page backgrounds without needing separate rules. */
+
+/* --- Chips ---------------------------------------------------------- */
+
+.sk-chip {
+  display: inline-block;
+  padding: 0.22em 0.7em;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  font-size: 0.87em;
+  line-height: 1.5;
+  color: var(--global-text-color);
+}
+
+/* Core: filled. */
+.sk-chip--core {
+  background: rgba(128, 128, 128, 0.14);
+}
+
+/* Working knowledge: outline only, same text color as Core. */
+.sk-chip--working {
+  border-color: var(--global-border-color);
+}
+
+/* Research & methods: accent tint, since this is the section that
+   distinguishes the page from a generic tool list. */
+.sk-chip--accent {
+  padding: 0.3em 0.8em;
+  background: rgba(82, 173, 200, 0.13);
+  border-color: rgba(82, 173, 200, 0.34);
+  font-size: 0.92em;
+}
+
+/* --- Legend --------------------------------------------------------- */
+
+.sk-legend {
+  margin: 0 0 1.8em;
+  padding-bottom: 1.3em;
+  border-bottom: 1px solid var(--global-border-color);
+  font-size: 0.85em;
+  line-height: 2.1;
+  color: var(--global-text-color-light);
+}
+
+.sk-legend .sk-chip {
+  margin-right: 0.35em;
+}
+
+.sk-legend span.sk-sep {
+  margin: 0 0.9em;
+  opacity: 0.4;
+}
+
+/* --- Label / chips rows --------------------------------------------- */
+
+.sk-list {
+  margin: 0;
+}
+
+.sk-item {
+  margin-bottom: 1.6em;
+}
+
+.sk-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Label sits above its chips so the chips get the full content width.
+   The rule fills the space to the right of the text, so the eye lands on
+   the label rather than on a full-width line. */
+.sk-item__label {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  margin: 0 0 0.6em;
+  font-size: 0.76em;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--global-text-color-light);
+}
+
+.sk-item__label::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--global-border-color);
+}
+
+.sk-item__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sk-item__chips li {
+  margin: 0;
+}
+</style>
+
+<p class="sk-legend">
+  <span class="sk-chip sk-chip--core">Core</span> used regularly across research and industry projects.
+  <span class="sk-sep">|</span>
+  <span class="sk-chip sk-chip--working">Working knowledge</span> used on specific projects.
+</p>
+
+<dl class="sk-list">
+
+  <div class="sk-item">
+    <dt class="sk-item__label">Research &amp; Methods</dt>
+    <dd class="sk-item__chips">
+      <li><span class="sk-chip sk-chip--accent">Federated Learning</span></li>
+      <li><span class="sk-chip sk-chip--accent">Foundation Models</span></li>
+      <li><span class="sk-chip sk-chip--accent">Self-Supervised Learning</span></li>
+      <li><span class="sk-chip sk-chip--accent">Out-of-Distribution Detection</span></li>
+      <li><span class="sk-chip sk-chip--accent">Medical Image Analysis</span></li>
+      <li><span class="sk-chip sk-chip--accent">Image Segmentation (U-Net)</span></li>
+      <li><span class="sk-chip sk-chip--accent">Survival Analysis</span></li>
+      <li><span class="sk-chip sk-chip--accent">Computer Vision</span></li>
+      <li><span class="sk-chip sk-chip--accent">Physiological Signal Analysis (ECG)</span></li>
+      <li><span class="sk-chip sk-chip--accent">Time-Series Forecasting (LSTM)</span></li>
+    </dd>
+  </div>
+
+  <div class="sk-item">
+    <dt class="sk-item__label">Machine Learning &amp; Deep Learning</dt>
+    <dd class="sk-item__chips">
+      <li><span class="sk-chip sk-chip--core" title="Core">PyTorch</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">Scikit-learn</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">OpenCV</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">Hugging Face</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">Transformers</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">Foundation Models</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">LLMs</span></li>
+      <li><span class="sk-chip sk-chip--working" title="Working knowledge">TensorFlow</span></li>
+    </dd>
+  </div>
+
+  <div class="sk-item">
+    <dt class="sk-item__label">Programming</dt>
+    <dd class="sk-item__chips">
+      <li><span class="sk-chip sk-chip--core" title="Core">Python</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">C</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">C++</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">JavaScript</span></li>
+      <li><span class="sk-chip sk-chip--working" title="Working knowledge">MATLAB</span></li>
+    </dd>
+  </div>
+
+  <div class="sk-item">
+    <dt class="sk-item__label">Data Analysis &amp; Visualization</dt>
+    <dd class="sk-item__chips">
+      <li><span class="sk-chip sk-chip--core" title="Core">NumPy</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">Pandas</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">Matplotlib</span></li>
+    </dd>
+  </div>
+
+  <div class="sk-item">
+    <dt class="sk-item__label">Software &amp; Tools</dt>
+    <dd class="sk-item__chips">
+      <li><span class="sk-chip sk-chip--core" title="Core">Git / GitHub</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">Docker</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">AWS</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">FastAPI</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">Django</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">REST APIs</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">SQL</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">ClickUp</span></li>
+      <li><span class="sk-chip sk-chip--core" title="Core">Jira</span></li>
+      <li><span class="sk-chip sk-chip--working" title="Working knowledge">MongoDB</span></li>
+      <li><span class="sk-chip sk-chip--working" title="Working knowledge">Elasticsearch</span></li>
+    </dd>
+  </div>
+
+</dl>
