@@ -7,6 +7,141 @@ author_profile: true
 
 {% include base_path %}
 
-{% for post in site.awards reversed %}
-  {% include archive-single.html %}
-{% endfor %}
+<style>
+/* Scoped to this page only. Colors come from the theme's own --global-*
+   custom properties, so light and dark modes are both handled. */
+.awd-timeline {
+  position: relative;
+  margin: 1.5em 0 0;
+  padding-left: 1.75em;
+}
+
+.awd-timeline::before {
+  content: "";
+  position: absolute;
+  top: 0.65em;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: var(--global-border-color);
+}
+
+.awd-timeline__item {
+  position: relative;
+  padding-bottom: 1.9em;
+}
+
+.awd-timeline__item::before {
+  content: "";
+  position: absolute;
+  top: 0.55em;
+  left: calc(-1 * (1.75em + 4.5px));
+  z-index: 1;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--global-bg-color);
+  border-radius: 50%;
+  background: var(--global-link-color);
+}
+
+.awd-timeline__item:last-child {
+  padding-bottom: 0;
+}
+
+/* Mask the rail below the final marker. */
+.awd-timeline__item:last-child::after {
+  content: "";
+  position: absolute;
+  top: 1.2em;
+  bottom: -1px;
+  left: -1.75em;
+  width: 3px;
+  background: var(--global-bg-color);
+}
+
+.awd-timeline__date {
+  margin: 0 0 0.15em;
+  font-size: 0.75em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--global-text-color-light);
+}
+
+.awd-timeline__title {
+  margin: 0 0 0.15em;
+  font-size: 1.15em;
+  line-height: 1.3;
+  color: var(--global-text-color);
+}
+
+.awd-timeline__subject {
+  margin: 0 0 0.2em;
+  font-size: 0.95em;
+  line-height: 1.45;
+  color: var(--global-text-color);
+}
+
+.awd-timeline__meta {
+  margin: 0;
+  font-size: 0.85em;
+  line-height: 1.5;
+  color: var(--global-text-color-light);
+}
+
+.awd-timeline__type {
+  font-style: normal;
+}
+
+.awd-timeline__venue {
+  font-style: italic;
+}
+
+/* Separator shown only when a type precedes the venue. */
+.awd-timeline__type + .awd-timeline__venue::before {
+  content: "\00b7";
+  font-style: normal;
+  margin: 0 0.45em;
+}
+
+@media (min-width: 768px) {
+  .awd-timeline {
+    padding-left: 2.45em;
+  }
+
+  .awd-timeline__item::before {
+    left: calc(-1 * (2.45em + 4.5px));
+  }
+
+  .awd-timeline__item:last-child::after {
+    left: -2.45em;
+  }
+}
+</style>
+
+<div class="awd-timeline">
+  {% for post in site.awards reversed %}
+    <div class="awd-timeline__item">
+      <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+
+        <p class="awd-timeline__date">
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %Y" }}</time>
+        </p>
+
+        <h2 class="awd-timeline__title" itemprop="name">{{ post.title }}</h2>
+
+        {% if post.sub_title %}
+          <p class="awd-timeline__subject">{{ post.sub_title | strip }}</p>
+        {% endif %}
+
+        <p class="awd-timeline__meta">
+          {% if post.type %}
+            <span class="awd-timeline__type">{{ post.type }}</span>
+          {% endif %}
+          <span class="awd-timeline__venue">{{ post.venue }}</span>
+        </p>
+
+      </article>
+    </div>
+  {% endfor %}
+</div>
