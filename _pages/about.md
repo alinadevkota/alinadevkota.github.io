@@ -18,7 +18,8 @@ Please do not hesitate to reach out to me via linkedin or email at: devkota.alin
 
 Research Interests
 ======
-My research is focused on applying Artificial Intelligence (AI) to healthcare. My current research has focused on foundation models and privacy-preserving techniques, such as federated learning for medical imaging, particularly in gastrointestinal endoscopy.
+My research is focused on applying Artificial Intelligence (AI) to healthcare. I am currently focusing my research on multimodal out-of-distribution (OOD) detection.
+My earlier work has focused on foundation models and privacy-preserving techniques, such as federated learning for medical imaging, particularly in gastrointestinal endoscopy.
 I am also passionate about exploring broader areas of computer vision, large language models, and other applications of deep learning and machine learning.
 
 Looking ahead, I plan to concentrate future research at the intersection of advanced computer vision and language models for medical imaging, with the goal of enhancing diagnostic accuracy and improving patient outcomes.

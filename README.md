@@ -6,8 +6,10 @@ I'm Alina Devkota, a PhD student in Computer Science at West Virginia University
 [Dr. Prashnna K. Gyawali](https://pkgyawali.com/) in the
 [Machine Intelligence Lab](https://sites.google.com/view/gyawalilab/).
 
-My research applies AI to healthcare — foundation models and privacy-preserving techniques
-such as federated learning for medical imaging, particularly gastrointestinal endoscopy.
+My research applies AI to healthcare. I am currently focusing on multimodal
+out-of-distribution (OOD) detection, with earlier work on foundation models and
+privacy-preserving techniques such as federated learning for medical imaging, particularly
+gastrointestinal endoscopy.
 
 The site is a static [Jekyll](https://jekyllrb.com/) site hosted on GitHub Pages.
 
