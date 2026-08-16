@@ -14,4 +14,235 @@
 <link rel="icon" href="/images/favicon.ico"/>
 <meta name="theme-color" content="#ffffff"/>
 
+<!-- Publication detail pages. The citation block is emitted by
+     _layouts/single.html with an inline "font-size: smaller" style, and only
+     documents with a citation: field produce it, so this effectively scopes to
+     publication pages. -->
+<style>
+  .page__content h2 {
+    margin-top: 1.4em;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid var(--global-border-color);
+    font-size: 0.85em;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .page__content p[style*="smaller"] {
+    margin-top: 1.8em;
+    padding: 0.9em 1.1em;
+    background: rgba(128, 128, 128, 0.08);
+    border-left: 3px solid var(--global-link-color);
+    border-radius: 3px;
+    font-size: 0.85em !important;
+    line-height: 1.6;
+  }
+
+  .page__content p[style*="smaller"] a {
+    font-weight: 600;
+  }
+
+  /* Previous / Next pager. The theme colors the label with
+     --global-text-color-light, which is #bcc0c4 in light mode - only 1.83:1 on
+     white, so the buttons were barely visible. Border was #dfe1e3 for the same
+     reason. Applies site-wide, not just to paper pages. */
+  .pagination--cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9em;
+    margin-top: 1.5em;
+  }
+
+  /* Overrides the theme's float/50%/centered pager. */
+  .pagination--cards .pagination--pager {
+    flex: 0 1 calc(50% - 0.45em);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    float: none;
+    width: auto;
+    padding: 0.85em 1.15em;
+    text-align: left;
+    text-decoration: none;
+    color: var(--global-text-color);
+    border: 1px solid #8b9197;             /* 3.18:1 on white */
+    border-radius: 6px;
+    transition: border-color 0.15s ease, background-color 0.15s ease,
+                transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  html[data-theme="dark"] .pagination--cards .pagination--pager {
+    border-color: #8f949a;                 /* 3.04:1 on #474747 */
+  }
+
+  /* A lone "Next" (first paper in the list) stays on the right. */
+  .pagination--cards .pager--next {
+    margin-left: auto;
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .pagination--cards .pager__label {
+    display: block;
+    font-size: 0.7em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #696f75;
+  }
+
+  html[data-theme="dark"] .pagination--cards .pager__label {
+    color: #bcc0c4;
+  }
+
+  .pagination--cards .pager--prev .pager__label::before {
+    content: "\2190";                      /* left arrow */
+    display: inline-block;
+    margin-right: 0.45em;
+    transition: transform 0.15s ease;
+  }
+
+  .pagination--cards .pager--next .pager__label::after {
+    content: "\2192";                      /* right arrow */
+    display: inline-block;
+    margin-left: 0.45em;
+    transition: transform 0.15s ease;
+  }
+
+  /* Two lines max, so the two cards stay the same height. */
+  .pagination--cards .pager__title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.9em;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--global-text-color);
+  }
+
+  .pagination--cards .pagination--pager:hover {
+    background: rgba(128, 128, 128, 0.09);
+    border-color: var(--global-link-color);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+    text-decoration: none;
+  }
+
+  .pagination--cards .pagination--pager:hover .pager__title {
+    color: var(--global-link-color);
+  }
+
+  .pagination--cards .pager--prev:hover .pager__label::before {
+    transform: translateX(-3px);
+  }
+
+  .pagination--cards .pager--next:hover .pager__label::after {
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 600px) {
+    .pagination--cards .pagination--pager {
+      flex: 1 1 100%;
+    }
+  }
+
+  /* Paper pages carry no profile sidebar, so reclaim the columns the theme
+     reserves for it. Theme default is width 83.05% + 16.95% right padding,
+     which would otherwise leave the gutter empty. $large is 925px. */
+  @media screen and (min-width: 925px) {
+    .page--wide {
+      width: 100%;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  /* --- Publication page header: authors, venue, action links --- */
+
+  .page__content .pub-authors {
+    margin: 0 0 0.3em;
+    font-size: 0.95em;
+    line-height: 1.55;
+    color: #696f75;
+  }
+
+  .page__content .pub-authors strong {
+    font-weight: 700;
+    color: var(--global-text-color);
+  }
+
+  .page__content .pub-venue {
+    margin: 0 0 1em;
+    font-size: 0.95em;
+    font-style: italic;
+    color: #696f75;
+  }
+
+  html[data-theme="dark"] .page__content .pub-authors,
+  html[data-theme="dark"] .page__content .pub-venue {
+    color: #bcc0c4;
+  }
+
+  .page__content .pub-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin: 0 0 1.6em;
+  }
+
+  .page__content .pub-actions a {
+    padding: 0.3em 1em;
+    background: rgba(128, 128, 128, 0.1);
+    border: 1px solid var(--global-dark-border-color);
+    border-radius: 3px;
+    font-size: 0.85em;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--global-link-color);
+  }
+
+  .page__content .pub-actions a:hover {
+    border-color: var(--global-link-color);
+    text-decoration: none;
+  }
+
+  /* Teaser figure at the top of a publication page. Natural aspect ratio, so
+     nothing is cropped or letterboxed. Teasers range from 1:1 to 2.2:1, so the
+     height is capped as well as the width - otherwise a square figure fills the
+     whole column and dwarfs the wide ones. */
+  .pub-teaser {
+    margin: 0.4em 0 1.8em;
+    text-align: center;
+  }
+
+  .pub-teaser img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 340px;
+    width: auto;
+    height: auto;
+    padding: 8px;
+    background: var(--global-bg-color);
+    border: 1px solid var(--global-border-color);
+    border-radius: 4px;
+  }
+
+  .pub-teaser__caption {
+    display: block;
+    margin-top: 0.6em;
+    font-size: 0.82em;
+    line-height: 1.5;
+    color: #696f75;
+  }
+
+  html[data-theme="dark"] .pub-teaser__caption {
+    color: #bcc0c4;
+  }
+</style>
+
 <!-- end custom head snippets -->

@@ -216,9 +216,13 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
       {% endif %}
 
       <p class="pub__links">
+        {% comment %}
+          "Details" links to the paper's own page (abstract, figure, citation).
+          It is not gated on post.citation - that page always exists.
+        {% endcomment %}
+        <a href="{{ post.url | relative_url }}">Details</a>
         {% if post.paperurl %}<a href="{{ post.paperurl }}">Paper</a>{% endif %}
         {% if post.codeurl %}<a href="{{ post.codeurl }}">Code</a>{% endif %}
-        {% if post.citation %}<a href="{{ post.url | relative_url }}">Citation</a>{% endif %}
       </p>
     </div>
   </article>
