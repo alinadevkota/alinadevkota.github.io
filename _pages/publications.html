@@ -5,32 +5,205 @@ permalink: /publications/
 author_profile: true
 ---
 
-{% if site.author.googlescholar %}
-  <div class="wordwrap">You can also find my articles on <a href="{{site.author.googlescholar}}">my Google Scholar profile</a>.</div>
-{% endif %}
-
 {% include base_path %}
 
-<!-- New style rendering if publication categories are defined -->
-{% if site.publication_category %}
-  {% for category in site.publication_category  %}
-    {% assign title_shown = false %}
-    {% for post in site.publications reversed %}
-      {% if post.category != category[0] %}
-        {% continue %}
-      {% endif %}
-      {% unless title_shown %}
-        <h2>{{ category[1].title }}</h2><hr />
-        {% assign title_shown = true %}
-      {% endunless %}
-      {% include publication-card.html %}
-    {% endfor %}
-  {% endfor %}
-{% else %}
-  {% for post in site.publications reversed %}
-  {% include publication-card.html %}
-  {% endfor %}
+<style>
+/* Secondary text. The theme's --global-text-color-light is #bcc0c4, only
+   1.83:1 on white, so it is unusable here; these two values are 5.08:1 in
+   their respective modes - readable, but clearly lighter than body text. */
+:root { --sec-text: #696f75; }
+html[data-theme="dark"] { --sec-text: #bcc0c4; }
+
+/* Scoped to this page only. Theme --global-* custom properties are used so
+   light and dark modes are both handled. */
+
+.pub-intro {
+  margin: 0 0 1.6em;
+  font-size: 0.92em;
+  color: var(--sec-text);
+}
+
+/* --- Year heading ---------------------------------------------------- */
+
+.pub-year {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  margin: 2em 0 1.1em;
+  font-size: 0.8em;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  color: var(--sec-text);
+}
+
+.pub-year:first-of-type {
+  margin-top: 0;
+}
+
+.pub-year::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--global-border-color);
+}
+
+/* --- Entry ----------------------------------------------------------- */
+
+.pub {
+  display: flex;
+  gap: 1.25em;
+  align-items: flex-start;
+  margin-bottom: 1.7em;
+}
+
+.pub:last-child {
+  margin-bottom: 0;
+}
+
+.pub__figure {
+  flex: 0 0 220px;
+}
+
+.pub__figure img {
+  display: block;
+  width: 220px;
+  height: 220px;
+  padding: 4px;
+  object-fit: cover;
+  background: var(--global-bg-color);
+  border: 1px solid var(--global-border-color);
+  border-radius: 6px;
+}
+
+.pub__body {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.pub__title {
+  margin: 0 0 0.3em;
+  font-size: 1.02em;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.pub__title a {
+  color: var(--global-text-color);
+  text-decoration: none;
+}
+
+.pub__title a:hover {
+  color: var(--global-link-color);
+  text-decoration: underline;
+}
+
+.pub__venue {
+  display: inline-block;
+  margin: 0 0 0.5em;
+  padding: 0.12em 0.6em;
+  /* darker of the two theme border colors, so the badge outline is visible */
+  border: 1px solid var(--global-dark-border-color);
+  border-radius: 3px;
+  font-size: 0.78em;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--sec-text);
+}
+
+.pub__excerpt {
+  margin: 0 0 0.6em;
+  font-size: 0.9em;
+  line-height: 1.6;
+  color: var(--global-text-color);
+}
+
+.pub__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45em;
+  margin: 0;
+}
+
+.pub__links a {
+  padding: 0.16em 0.7em;
+  border: 1px solid var(--global-border-color);
+  border-radius: 3px;
+  font-size: 0.8em;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--global-link-color);
+}
+
+.pub__links a:hover {
+  border-color: var(--global-link-color);
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .pub {
+    display: block;
+  }
+
+  .pub__figure {
+    margin-bottom: 0.7em;
+  }
+
+  .pub__figure img {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+</style>
+
+{% if site.author.googlescholar %}
+  <p class="pub-intro">
+    You can also find my articles on <a href="{{ site.author.googlescholar }}">my Google Scholar profile</a>.
+  </p>
 {% endif %}
 
+{% assign pubs = site.publications | sort: "date" | reverse %}
+{% assign shown_year = "" %}
 
+{% for post in pubs %}
+  {% assign year = post.date | date: "%Y" %}
+  {% if year != shown_year %}
+    <h2 class="pub-year">{{ year }}</h2>
+    {% assign shown_year = year %}
+  {% endif %}
 
+  <article class="pub">
+    {% if post.teaser %}
+      <div class="pub__figure">
+        {% if post.paperurl %}
+          <a href="{{ post.paperurl }}"><img src="{{ post.teaser | relative_url }}" alt="{{ post.title }}"></a>
+        {% else %}
+          <img src="{{ post.teaser | relative_url }}" alt="{{ post.title }}">
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="pub__body">
+      <h3 class="pub__title">
+        {% if post.paperurl %}
+          <a href="{{ post.paperurl }}">{{ post.title }}</a>
+        {% else %}
+          {{ post.title }}
+        {% endif %}
+      </h3>
+
+      {% if post.venue %}
+        <span class="pub__venue">{{ post.venue }}</span>
+      {% endif %}
+
+      {% if post.excerpt %}
+        <p class="pub__excerpt">{{ post.excerpt }}</p>
+      {% endif %}
+
+      <p class="pub__links">
+        {% if post.paperurl %}<a href="{{ post.paperurl }}">Paper</a>{% endif %}
+        {% if post.codeurl %}<a href="{{ post.codeurl }}">Code</a>{% endif %}
+        {% if post.citation %}<a href="{{ post.url | relative_url }}">Citation</a>{% endif %}
+      </p>
+    </div>
+  </article>
+{% endfor %}

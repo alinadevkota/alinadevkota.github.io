@@ -6,6 +6,12 @@ author_profile: true
 ---
 
 <style>
+/* Secondary text. The theme's --global-text-color-light is #bcc0c4, only
+   1.83:1 on white, so it is unusable here; these two values are 5.08:1 in
+   their respective modes - readable, but clearly lighter than body text. */
+:root { --sec-text: #696f75; }
+html[data-theme="dark"] { --sec-text: #bcc0c4; }
+
 /* Scoped to this page only. Theme --global-* custom properties are used where
    they exist; the accent tints are rgba overlays, which sit correctly on both
    the light and dark page backgrounds without needing separate rules. */
@@ -49,7 +55,7 @@ author_profile: true
   border-bottom: 1px solid var(--global-border-color);
   font-size: 0.85em;
   line-height: 2.1;
-  color: var(--global-text-color-light);
+  color: var(--sec-text);
 }
 
 .sk-legend .sk-chip {
@@ -88,7 +94,7 @@ author_profile: true
   letter-spacing: 0.09em;
   line-height: 1.5;
   text-transform: uppercase;
-  color: var(--global-text-color-light);
+  color: var(--sec-text);
 }
 
 .sk-item__label::after {

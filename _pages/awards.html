@@ -8,6 +8,12 @@ author_profile: true
 {% include base_path %}
 
 <style>
+/* Secondary text. The theme's --global-text-color-light is #bcc0c4, only
+   1.83:1 on white, so it is unusable here; these two values are 5.08:1 in
+   their respective modes - readable, but clearly lighter than body text. */
+:root { --sec-text: #696f75; }
+html[data-theme="dark"] { --sec-text: #bcc0c4; }
+
 /* Scoped to this page only. Colors come from the theme's own --global-*
    custom properties, so light and dark modes are both handled. */
 .awd-timeline {
@@ -65,7 +71,7 @@ author_profile: true
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--global-text-color-light);
+  color: var(--sec-text);
 }
 
 .awd-timeline__title {
@@ -86,7 +92,7 @@ author_profile: true
   margin: 0;
   font-size: 0.85em;
   line-height: 1.5;
-  color: var(--global-text-color-light);
+  color: var(--sec-text);
 }
 
 .awd-timeline__type {
