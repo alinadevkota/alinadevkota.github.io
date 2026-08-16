@@ -1,5 +1,6 @@
 ---
 title: "Towards Federated Learning Across Biobanks: Prototype Software from the 2026 Carnegie Mellon University–NVIDIA Hackathon"
+authors: 'J. Mu et al.'
 collection: publications
 category: manuscripts
 permalink: /publication/2026-03-20-FL_Biobanks_Hackathon

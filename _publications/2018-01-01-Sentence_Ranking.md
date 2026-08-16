@@ -1,5 +1,6 @@
 ---
 title: "Sentence Ranking and Answer Pinpointing in Online Discussion Forums Utilizing User-generated Metrics and Highlights"
+authors: 'S. Gautam, S. Shikha, A. Devkota, S. Pyakurel'
 collection: publications
 category: manuscripts
 permalink: /publication/2018-01-01-Sentence_Ranking

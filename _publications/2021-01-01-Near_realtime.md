@@ -1,5 +1,6 @@
 ---
 title: "Near Real-Time Mobile Profiling and Modeling of Fine-Scale Environmental Proxies Along Major Road Lines of Nepal"
+authors: 'N. B. Adhikari, S. Gautam, A. Devkota, S. Shikha, S. Pyakurel, M. P. Adhikari'
 collection: publications
 category: manuscripts
 permalink: /publication/2021-01-01-Near_realtime
