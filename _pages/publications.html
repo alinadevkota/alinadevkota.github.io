@@ -222,7 +222,10 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
         {% endcomment %}
         <a href="{{ post.url | relative_url }}">Details</a>
         {% if post.paperurl %}<a href="{{ post.paperurl }}">Paper</a>{% endif %}
+        {% if post.projecturl %}<a href="{{ post.projecturl }}">Project</a>{% endif %}
         {% if post.codeurl %}<a href="{{ post.codeurl }}">Code</a>{% endif %}
+        {% if post.modelsurl %}<a href="{{ post.modelsurl }}">Models</a>{% endif %}
+        {% if post.videourl %}<a href="{{ post.videourl }}">Video</a>{% endif %}
       </p>
     </div>
   </article>

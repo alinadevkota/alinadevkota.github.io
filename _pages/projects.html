@@ -1,0 +1,171 @@
+---
+layout: archive
+title: "Projects"
+permalink: /projects/
+author_profile: true
+---
+
+{% include base_path %}
+
+<style>
+/* Secondary text. The theme's --global-text-color-light is #bcc0c4, only
+   1.83:1 on white, so it is unusable here; these two values are 5.08:1 in
+   their respective modes - readable, but clearly lighter than body text. */
+:root { --sec-text: #696f75; }
+html[data-theme="dark"] { --sec-text: #bcc0c4; }
+
+/* Scoped to this page only. Same timeline language as Experience and Awards. */
+.prj-timeline {
+  position: relative;
+  margin: 1.5em 0 0;
+  padding-left: 1.75em;
+}
+
+.prj-timeline::before {
+  content: "";
+  position: absolute;
+  top: 0.65em;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: var(--global-border-color);
+}
+
+.prj-timeline__item {
+  position: relative;
+  padding-bottom: 1.9em;
+}
+
+.prj-timeline__item::before {
+  content: "";
+  position: absolute;
+  top: 0.55em;
+  left: calc(-1 * (1.75em + 4.5px));
+  z-index: 1;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--global-bg-color);
+  border-radius: 50%;
+  background: var(--global-link-color);
+}
+
+.prj-timeline__item:last-child {
+  padding-bottom: 0;
+}
+
+/* Mask the rail below the final marker. */
+.prj-timeline__item:last-child::after {
+  content: "";
+  position: absolute;
+  top: 1.2em;
+  bottom: -1px;
+  left: -1.75em;
+  width: 3px;
+  background: var(--global-bg-color);
+}
+
+.prj-timeline__date {
+  margin: 0 0 0.15em;
+  font-size: 0.75em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sec-text);
+}
+
+.prj-timeline__current {
+  color: var(--global-link-color);
+}
+
+.prj-timeline__title {
+  margin: 0 0 0.3em;
+  font-size: 1.15em;
+  line-height: 1.3;
+  color: var(--global-text-color);
+}
+
+.prj-timeline__body {
+  margin: 0 0 0.55em;
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+.prj-timeline__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45em;
+  margin: 0;
+}
+
+.prj-timeline__links a {
+  padding: 0.16em 0.7em;
+  border: 1px solid var(--global-dark-border-color);
+  border-radius: 3px;
+  font-size: 0.8em;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--global-link-color);
+}
+
+.prj-timeline__links a:hover {
+  border-color: var(--global-link-color);
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .prj-timeline {
+    padding-left: 2.45em;
+  }
+  .prj-timeline__item::before {
+    left: calc(-1 * (2.45em + 4.5px));
+  }
+  .prj-timeline__item:last-child::after {
+    left: -2.45em;
+  }
+}
+</style>
+
+<div class="prj-timeline">
+
+  <div class="prj-timeline__item">
+    <p class="prj-timeline__date">Sep 2026 &ndash; <span class="prj-timeline__current">Present</span></p>
+    <h2 class="prj-timeline__title">Paper2Video</h2>
+    <p class="prj-timeline__body">Generates narrated explainer videos from research papers and lectures. A set of reusable primitives &mdash; extract, plan, narrate, render, deliver &mdash; turns a paper into a scripted, scene-by-scene video, applied both to papers I picked from the literature and to my own first- and second-author work.</p>
+    <p class="prj-timeline__links">
+      <a href="https://alinadevkota.github.io/Paper2Video/">Project page</a>
+      <a href="{{ '/videos/' | relative_url }}">Videos for my papers</a>
+      <a href="https://github.com/alinadevkota/Paper2Video">Code</a>
+    </p>
+  </div>
+
+  <div class="prj-timeline__item">
+    <p class="prj-timeline__date">Jan 2026 &ndash; <span class="prj-timeline__current">Present</span></p>
+    <h2 class="prj-timeline__title">Jailbreaking Multimodal Unlearning Models</h2>
+    <p class="prj-timeline__body">Investigating jailbreak and adversarial prompting strategies against multimodal unlearning models to evaluate unlearning reliability and identify failure modes under malicious or adaptive attacks.</p>
+  </div>
+
+  <div class="prj-timeline__item">
+    <p class="prj-timeline__date">Dec 2025 &ndash; <span class="prj-timeline__current">Present</span></p>
+    <h2 class="prj-timeline__title">Multimodal Out-of-Distribution (OOD) Detection</h2>
+    <p class="prj-timeline__body">Developing methods to detect out-of-distribution inputs across multiple data modalities, primarily focusing on Vision Language Models to improve AI robustness and reliability.</p>
+  </div>
+
+  <div class="prj-timeline__item">
+    <p class="prj-timeline__date">Sep 2025 &ndash; Dec 2025</p>
+    <h2 class="prj-timeline__title">Rationale-Augmented Knowledge Distillation for Small Language Models</h2>
+    <p class="prj-timeline__body">Developed a multi-task knowledge distillation framework to train compact language models (e.g., T5-Small, FLAN-T5-Small) to jointly predict task labels and reconstruct LLM-generated rationales.</p>
+  </div>
+
+  <div class="prj-timeline__item">
+    <p class="prj-timeline__date">Dec 2024 &ndash; <span class="prj-timeline__current">Present</span></p>
+    <h2 class="prj-timeline__title">Feature Selection in Manufacturing using Knockoff Framework</h2>
+    <p class="prj-timeline__body">Implemented the knockoff framework for feature selection in manufacturing to select 44 relevant features out of 590 while controlling false discovery rates.</p>
+  </div>
+
+  <div class="prj-timeline__item">
+    <p class="prj-timeline__date">Apr 2024 &ndash; Jan 2025</p>
+    <h2 class="prj-timeline__title">Contrastive Learning Framework for Knowledge Distillation</h2>
+    <p class="prj-timeline__body">Conducted robustness analysis against adversarial attacks and imbalanced data.</p>
+  </div>
+
+</div>

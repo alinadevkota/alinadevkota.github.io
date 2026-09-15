@@ -11,6 +11,12 @@ main:
   - title: "Publications"
     url: /publications/
 
+  - title: "Projects"
+    url: /projects/
+
+  - title: "Videos"
+    url: /videos/
+
   - title: "Experience"
     url: /experience/
 

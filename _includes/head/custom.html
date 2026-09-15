@@ -44,6 +44,83 @@
     font-weight: 600;
   }
 
+  /* --- Footer -------------------------------------------------------
+     The theme paints footer text with --global-text-color-light (#bdc1c4),
+     which is 1.63:1 on the #f2f3f3 footer - unreadable. These values are
+     5.4:1 light / 6.0:1 dark. It also uppercases every item, which mangles
+     the email address, so only the small labels keep that treatment. */
+  .page__footer {
+    color: #5e6469;
+  }
+
+  html[data-theme="dark"] .page__footer {
+    color: #c4c9cd;
+  }
+
+  .page__footer-follow ul.social-icons {
+    margin: 0 0 0.35em;
+  }
+
+  .page__footer-follow li {
+    margin-right: 1.1em;
+    font-size: 0.8em;
+    text-transform: none;              /* was uppercase on every item */
+    color: #5e6469;
+  }
+
+  html[data-theme="dark"] .page__footer-follow li {
+    color: #c4c9cd;
+  }
+
+  /* Only the "Follow:" / "Contact:" labels stay in small caps. */
+  .page__footer-follow .footer-label {
+    display: inline-block;
+    min-width: 5.2em;
+    font-size: 0.92em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .page__footer-follow a {
+    color: #5e6469;
+    text-decoration: none;
+  }
+
+  html[data-theme="dark"] .page__footer-follow a {
+    color: #c4c9cd;
+  }
+
+  .page__footer-follow a:hover {
+    color: var(--global-link-color);
+    text-decoration: underline;
+  }
+
+  /* Addresses are case-insensitive, but uppercasing one reads as shouting. */
+  .page__footer-follow .footer-email {
+    text-transform: none;
+  }
+
+  .page__footer-copyright {
+    margin-top: 0.9em;
+    font-size: 0.72em;
+    line-height: 1.7;
+    color: #6a7075;
+  }
+
+  html[data-theme="dark"] .page__footer-copyright {
+    color: #b4b9bd;
+  }
+
+  .page__footer-copyright a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  .page__footer-copyright a:hover {
+    color: var(--global-link-color);
+  }
+
   /* Previous / Next pager. The theme colors the label with
      --global-text-color-light, which is #bcc0c4 in light mode - only 1.83:1 on
      white, so the buttons were barely visible. Border was #dfe1e3 for the same
@@ -208,6 +285,21 @@
   .page__content .pub-actions a:hover {
     border-color: var(--global-link-color);
     text-decoration: none;
+  }
+
+  /* Embedded explainer video on a publication page. */
+  .pub-video {
+    margin: 0 0 1.8em;
+  }
+
+  .pub-video video {
+    display: block;
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    background: #000;
+    border: 1px solid var(--global-border-color);
+    border-radius: 6px;
   }
 
   /* Teaser figure at the top of a publication page. Natural aspect ratio, so

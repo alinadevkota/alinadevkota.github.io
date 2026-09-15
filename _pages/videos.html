@@ -1,0 +1,159 @@
+---
+layout: archive
+title: "Paper Videos"
+permalink: /videos/
+author_profile: true
+---
+
+{% include base_path %}
+
+<style>
+/* Secondary text. The theme's --global-text-color-light is #bcc0c4, only
+   1.83:1 on white, so it is unusable here; these two values are 5.08:1 in
+   their respective modes - readable, but clearly lighter than body text. */
+:root { --sec-text: #696f75; }
+html[data-theme="dark"] { --sec-text: #bcc0c4; }
+
+.vid-intro {
+  margin: 0 0 1.8em;
+  padding-bottom: 1.3em;
+  border-bottom: 1px solid var(--global-border-color);
+  font-size: 0.92em;
+  line-height: 1.6;
+  color: var(--sec-text);
+}
+
+.vid {
+  margin: 0 0 2.4em;
+}
+
+.vid:last-child {
+  margin-bottom: 0;
+}
+
+.vid__player video {
+  display: block;
+  width: 100%;
+  background: #000;
+  border: 1px solid var(--global-border-color);
+  border-radius: 6px;
+}
+
+.vid__title {
+  margin: 0.8em 0 0.25em;
+  font-size: 1.05em;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.vid__title a {
+  color: var(--global-text-color);
+  text-decoration: none;
+}
+
+.vid__title a:hover {
+  color: var(--global-link-color);
+  text-decoration: underline;
+}
+
+.vid__authors {
+  margin: 0 0 0.3em;
+  font-size: 0.87em;
+  line-height: 1.5;
+  color: var(--sec-text);
+}
+
+.vid__authors strong {
+  font-weight: 700;
+  color: var(--global-text-color);
+}
+
+.vid__venue {
+  display: inline-block;
+  margin: 0 0 0.6em;
+  padding: 0.12em 0.6em;
+  border: 1px solid var(--global-dark-border-color);
+  border-radius: 3px;
+  font-size: 0.78em;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--sec-text);
+}
+
+.vid__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45em;
+  margin: 0;
+}
+
+.vid__links a {
+  padding: 0.16em 0.7em;
+  border: 1px solid var(--global-border-color);
+  border-radius: 3px;
+  font-size: 0.8em;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--global-link-color);
+}
+
+.vid__links a:hover {
+  border-color: var(--global-link-color);
+  text-decoration: none;
+}
+
+.vid-empty {
+  font-size: 0.95em;
+  color: var(--sec-text);
+}
+</style>
+
+{% comment %}
+  Built from the publications collection: every paper with a `videourl:` in its
+  front matter appears here automatically, so this page never needs its own
+  list to keep in sync.
+{% endcomment %}
+{% assign vids = site.publications | where_exp: "p", "p.videourl" | sort: "date" | reverse %}
+
+<p class="vid-intro">
+  Narrated explainer videos for my papers, generated with
+  <a href="{{ '/projects/' | relative_url }}">Paper2Video</a>. Each one walks through
+  the problem, method and results scene by scene.
+  The full set, including videos of papers and lectures by others, lives on the
+  <a href="https://alinadevkota.github.io/Paper2Video/">Paper2Video site</a>.
+</p>
+
+{% if vids.size == 0 %}
+  <p class="vid-empty">No paper videos published yet &mdash; check back soon.</p>
+{% endif %}
+
+{% for p in vids %}
+  <article class="vid">
+    <div class="vid__player">
+      <video controls preload="metadata"{% if p.videoposter %} poster="{{ p.videoposter | relative_url }}"{% endif %}>
+        <source src="{{ p.videourl }}" type="video/mp4">
+        Your browser does not support embedded video.
+        <a href="{{ p.videourl }}">Download the video</a> instead.
+      </video>
+    </div>
+
+    <h2 class="vid__title"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h2>
+
+    {% if p.authors %}
+      <p class="vid__authors">{{ p.authors | replace: 'A. Devkota', '<strong>A. Devkota</strong>' }}</p>
+    {% endif %}
+
+    {% if p.venue %}
+      {% assign vid_year = p.date | date: "%Y" %}
+      <span class="vid__venue">{{ p.venue }}{% unless p.venue contains vid_year %} &middot; {{ vid_year }}{% endunless %}</span>
+    {% endif %}
+
+    <p class="vid__links">
+      <a href="{{ p.url | relative_url }}">Details</a>
+      {% if p.paperurl %}<a href="{{ p.paperurl }}">Paper</a>{% endif %}
+      {% if p.projecturl %}<a href="{{ p.projecturl }}">Project</a>{% endif %}
+      {% if p.codeurl %}<a href="{{ p.codeurl }}">Code</a>{% endif %}
+      {% if p.modelsurl %}<a href="{{ p.modelsurl }}">Models</a>{% endif %}
+    </p>
+  </article>
+{% endfor %}

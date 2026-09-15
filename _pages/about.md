@@ -67,7 +67,7 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
 
 .hp-news__item {
   display: grid;
-  grid-template-columns: 3.6em 1fr;
+  grid-template-columns: 5.2em 1fr;
   gap: 0 1em;
   padding: 0.65em 0;
   border-bottom: 1px solid var(--global-border-color);
@@ -77,11 +77,12 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
   border-bottom: 0;
 }
 
-.hp-news__year {
+.hp-news__date {
   font-size: 0.78em;
   font-weight: 700;
   letter-spacing: 0.06em;
   line-height: 1.9;
+  text-transform: uppercase;
   color: var(--sec-text);
 }
 
@@ -95,7 +96,7 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
     grid-template-columns: 1fr;
     gap: 0.15em;
   }
-  .hp-news__year {
+  .hp-news__date {
     line-height: 1.4;
   }
 }
@@ -133,32 +134,42 @@ Looking ahead, I plan to concentrate future research at the intersection of adva
 <div class="hp-news">
 
   <div class="hp-news__item">
-    <span class="hp-news__year">2026</span>
+    <span class="hp-news__date">Sep 2026</span>
+    <div class="hp-news__text">Our paper, <em><a href="https://arxiv.org/pdf/2505.24108">Federated Foundation Model for GI Endoscopy Images</a></em>, has been accepted to <strong>npj Digital Medicine</strong>.</div>
+  </div>
+
+  <div class="hp-news__item">
+    <span class="hp-news__date">Sep 2026</span>
+    <div class="hp-news__text">Released <a href="https://alinadevkota.github.io/Paper2Video/">Paper2Video</a>, a project that generates narrated explainer videos from research papers and lectures. <a href="{{ '/videos/' | relative_url }}">Watch the videos for my papers</a>.</div>
+  </div>
+
+  <div class="hp-news__item">
+    <span class="hp-news__date">2026</span>
     <div class="hp-news__text">Currently serving as the <strong>Web and Publicity Chair</strong> for the <a href="https://demi-workshop.github.io/">4th DEMI Workshop at MICCAI 2026</a>.</div>
   </div>
 
   <div class="hp-news__item">
-    <span class="hp-news__year">2026</span>
+    <span class="hp-news__date">Apr 2026</span>
     <div class="hp-news__text">Received <strong>2nd place</strong> in the Rapid Fire Presentation at <a href="{{ '/files/AlinaDevkota_RapidFire.pptx.pdf' | relative_url }}">Statler College Research Week</a>.</div>
   </div>
 
   <div class="hp-news__item">
-    <span class="hp-news__year">2026</span>
+    <span class="hp-news__date">Feb 2026</span>
     <div class="hp-news__text">Our paper, <em><a href="https://openaccess.thecvf.com/content/CVPR2026F/papers/Devkota_FedVG_Gradient-Guided_Aggregation_for_Enhanced_Federated_Learning_CVPRF_2026_paper.pdf">FedVG: Gradient-Guided Aggregation for Enhanced Federated Learning</a></em>, has been accepted to <strong>CVPR Findings 2026</strong>.</div>
   </div>
 
   <div class="hp-news__item">
-    <span class="hp-news__year">2025</span>
+    <span class="hp-news__date">Jul 2025</span>
     <div class="hp-news__text">Served as the lecturer for the <a href="https://www.linkedin.com/posts/prashnna-k-gyawali_generativeai-reliableai-aieducation-activity-7349619059082084352-xlRh">WVU SURE Generative AI Workshop</a>.</div>
   </div>
 
   <div class="hp-news__item">
-    <span class="hp-news__year">2025</span>
+    <span class="hp-news__date">May 2025</span>
     <div class="hp-news__text">Received <strong>2nd place</strong> in the poster presentation at the <a href="https://hsc.wvu.edu/research-and-graduate-education/wvu-ai-symposium/">WVU AI Symposium</a>.</div>
   </div>
 
   <div class="hp-news__item">
-    <span class="hp-news__year">2025</span>
+    <span class="hp-news__date">Apr 2025</span>
     <div class="hp-news__text">Our paper, <em><a href="https://www.nature.com/articles/s41598-025-97113-0">AI Analysis for Ejection Fraction Estimation from 12-Lead ECG</a></em>, was published in <strong>Scientific Reports</strong>.</div>
   </div>
 

@@ -27,7 +27,10 @@ teaser: images/publications/sranking_teaser.png
 
 <p class="pub-actions">
   {% if page.paperurl %}<a href="{{ page.paperurl }}">Paper</a>{% endif %}
+  {% if page.projecturl %}<a href="{{ page.projecturl }}">Project</a>{% endif %}
   {% if page.codeurl %}<a href="{{ page.codeurl }}">Code</a>{% endif %}
+  {% if page.modelsurl %}<a href="{{ page.modelsurl }}">Models</a>{% endif %}
+  {% if page.videourl %}<a href="{{ page.videourl }}">Video</a>{% endif %}
   {% if page.slidesurl %}<a href="{{ page.slidesurl }}">Slides</a>{% endif %}
   {% if page.citation %}<a href="#cite">Cite</a>{% endif %}
 </p>
@@ -38,6 +41,20 @@ teaser: images/publications/sranking_teaser.png
   <img src="{{ pub_figure | relative_url }}" alt="{{ page.figure_alt | default: page.title | escape }}">
   {% if page.figure_caption %}<span class="pub-teaser__caption">{{ page.figure_caption }}</span>{% endif %}
 </p>
+{% endif %}
+
+{% comment %}
+  Narrated explainer video (Paper2Video). Set `videourl:` in the front matter
+  to an .mp4; `videoposter:` optionally sets the still shown before playback.
+{% endcomment %}
+{% if page.videourl %}
+<div class="pub-video">
+  <video controls preload="metadata"{% if page.videoposter %} poster="{{ page.videoposter | relative_url }}"{% endif %}>
+    <source src="{{ page.videourl }}" type="video/mp4">
+    Your browser does not support embedded video.
+    <a href="{{ page.videourl }}">Download the video</a> instead.
+  </video>
+</div>
 {% endif %}
 
 ## Summary
