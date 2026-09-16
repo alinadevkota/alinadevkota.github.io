@@ -1,0 +1,19 @@
+{% comment %}
+  Resolves a publication's video and poster, exposed as `video_src` and
+  `video_poster`. A `videoslug:` drives both:
+    <site.paper2video_base>/videos/mine/<slug>.mp4
+    <site.paper2video_base>/posters/mine/<slug>.jpg
+  `videourl:` / `videoposter:` override either one. Sets nothing when the
+  paper declares no slug and no explicit URL.
+  Usage: {% include video-url.html doc=page %}
+{% endcomment %}
+{% assign video_src = include.doc.videourl %}
+{% assign video_poster = include.doc.videoposter %}
+{% if include.doc.videoslug %}
+  {% unless video_src %}
+    {% capture video_src %}{{ site.paper2video_base }}/videos/mine/{{ include.doc.videoslug }}.mp4{% endcapture %}
+  {% endunless %}
+  {% unless video_poster %}
+    {% capture video_poster %}{{ site.paper2video_base }}/posters/mine/{{ include.doc.videoslug }}.jpg{% endcapture %}
+  {% endunless %}
+{% endif %}

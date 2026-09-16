@@ -16,4 +16,28 @@
     await mermaid.run({querySelector:'code.language-mermaid'});
 </script>
 
+<!-- Paper videos: reveal only the ones actually present in the Paper2Video
+     repo. Elements are rendered hidden with data-video-probe="<url>"; one HEAD
+     request per distinct URL decides. Pages serves these with
+     access-control-allow-origin: *, so the cross-origin check is allowed.
+     If JS is off or a request fails, nothing is shown rather than a dead
+     player or a 404 link. -->
+<script>
+(function () {
+  var nodes = document.querySelectorAll('[data-video-probe]');
+  if (!nodes.length || !window.fetch) return;
+  var seen = {};
+  nodes.forEach(function (el) {
+    var url = el.getAttribute('data-video-probe');
+    if (!url) return;
+    if (!seen[url]) {
+      seen[url] = fetch(url, { method: 'HEAD' })
+        .then(function (r) { return r.ok; })
+        .catch(function () { return false; });
+    }
+    seen[url].then(function (ok) { if (ok) { el.hidden = false; } });
+  });
+})();
+</script>
+
 <!-- end custom footer snippets -->

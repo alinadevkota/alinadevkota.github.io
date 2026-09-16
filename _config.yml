@@ -17,6 +17,10 @@ url                      : https://alinadevkota.github.io # the base hostname & 
 baseurl                  : "/" # the subpath of your site, e.g. "/blog"
 repository               : "alinadevkota/Profile"
 
+# Paper2Video repo root. A paper sets `videoslug:` and the site builds
+#   <base>/videos/mine/<slug>.mp4   and   <base>/posters/mine/<slug>.jpg
+paper2video_base         : "https://alinadevkota.github.io/Paper2Video"
+
 # Site Author - The following control what appear as part of the author content on the side bar.
 #               If a field is blank the icon and link will not appear, otherwise it will be shown.
 #               Additional customization can be done by editing /_includes/author-profile.html

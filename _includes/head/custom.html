@@ -19,6 +19,14 @@
      documents with a citation: field produce it, so this effectively scopes to
      publication pages. -->
 <style>
+  /* The theme's HTML5 reset sets display:block on article, aside, section and
+     friends. That is an author rule, and the [hidden] rule it fights lives only
+     in the UA stylesheet, so an author declaration wins no matter the
+     specificity - any <article hidden> kept rendering. Restore the intent. */
+  [hidden] {
+    display: none !important;
+  }
+
   .page__content h2 {
     margin-top: 1.4em;
     margin-bottom: 0.5em;
@@ -287,19 +295,142 @@
     text-decoration: none;
   }
 
-  /* Embedded explainer video on a publication page. */
+  /* --- Abstract + teaser layout ---------------------------------------
+     The figure comes first in the source so it can be floated; without a video
+     the flex column reorders it back below the abstract. With a video the
+     container becomes a block, the figure floats right, and the abstract wraps
+     beside it and then reflows to full width once it clears the image. */
+  .pub-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pub-body .pub-body__text { order: 1; }
+  .pub-body .pub-teaser     { order: 2; }
+
+  .pub-body__text > h2:first-child {
+    margin-top: 0;
+  }
+
+  /* Justified abstract. Hyphenation is enabled alongside it: justifying without
+     it opens large word gaps, worst in the ~370px lines that run beside a
+     floated figure. The theme sets lang="en" on <html>, which hyphens needs. */
+  .pub-body__text p {
+    text-align: justify;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  @media (min-width: 800px) {
+    .pub-body--split {
+      display: block;                  /* float needs a block container */
+    }
+
+    .pub-body--split::after {
+      content: "";
+      display: block;
+      clear: both;                     /* keep the video clear of the float */
+    }
+
+    .pub-body--split .pub-teaser {
+      float: right;
+      /* Wider than the grid version could afford: because the text reflows to
+         full width below the figure, only the first few lines are narrowed. */
+      width: 27em;
+      margin: 0.3em 0 1.1em 1.8em;
+    }
+
+    .pub-body--split .pub-teaser img {
+      width: 100%;
+      max-height: none;
+    }
+
+    /* A block box still spans the full width beside a float - only its line
+       boxes shrink - so the heading's bottom rule would run under the figure.
+       overflow:hidden gives it its own formatting context so it stops short. */
+    .pub-body--split .pub-body__text > h2 {
+      overflow: hidden;
+    }
+  }
+
+  /* Embedded explainer video on a publication page: player left, note right. */
   .pub-video {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;               /* note sits centred against the player */
+    gap: 1.4em;
     margin: 0 0 1.8em;
   }
 
-  .pub-video video {
+  /* The probe script reveals this block by clearing [hidden]. Because the rule
+     above sets display:flex, [hidden] alone would no longer hide it - an author
+     display always beats the UA stylesheet - so it is restated here. */
+  .pub-video[hidden] {
+    display: none;
+  }
+
+  .pub-video__player {
+    flex: 1 1 24em;
+    min-width: 0;
+  }
+
+  .pub-video__player video {
     display: block;
     width: 100%;
-    max-width: 720px;
-    margin: 0 auto;
     background: #000;
     border: 1px solid var(--global-border-color);
     border-radius: 6px;
+  }
+
+  .pub-video__note {
+    flex: 1 1 12em;
+    max-width: 16em;
+    padding-left: 1.2em;
+    border-left: 2px solid var(--global-border-color);
+    font-size: 0.85em;
+    line-height: 1.6;
+    color: #696f75;
+  }
+
+  html[data-theme="dark"] .pub-video__note {
+    color: #bcc0c4;
+  }
+
+  .pub-video__note p {
+    margin: 0 0 0.7em;
+  }
+
+  .pub-video__note p:last-child {
+    margin-bottom: 0;
+  }
+
+  .pub-video__note-label {
+    font-size: 0.82em;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--global-text-color);
+  }
+
+  .pub-video__note-more {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .pub-video__note-more::after {
+    content: "\2192";
+    margin-left: 0.35em;
+  }
+
+  /* Below this the note reads better under the player than beside it. */
+  @media (max-width: 700px) {
+    .pub-video__note {
+      max-width: none;
+      padding-left: 0;
+      padding-top: 0.9em;
+      border-left: 0;
+      border-top: 2px solid var(--global-border-color);
+    }
   }
 
   /* Teaser figure at the top of a publication page. Natural aspect ratio, so

@@ -31,6 +31,17 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
   margin-bottom: 0;
 }
 
+/* A rule between entries, so a video is unmistakably grouped with the title
+   above it rather than reading as a caption for the one below. */
+.vid + .vid {
+  padding-top: 2.4em;
+  border-top: 1px solid var(--global-border-color);
+}
+
+.vid__player {
+  margin: 0.9em 0 0.75em;
+}
+
 .vid__player video {
   display: block;
   width: 100%;
@@ -40,7 +51,7 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
 }
 
 .vid__title {
-  margin: 0.8em 0 0.25em;
+  margin: 0 0 0.25em;
   font-size: 1.05em;
   font-weight: 600;
   line-height: 1.4;
@@ -68,9 +79,25 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
   color: var(--global-text-color);
 }
 
+.vid__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6em;
+  margin: 0 0 0.6em;
+}
+
+.vid__date {
+  font-size: 0.82em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sec-text);
+}
+
 .vid__venue {
   display: inline-block;
-  margin: 0 0 0.6em;
+  margin: 0;
   padding: 0.12em 0.6em;
   border: 1px solid var(--global-dark-border-color);
   border-radius: 3px;
@@ -109,11 +136,13 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
 </style>
 
 {% comment %}
-  Built from the publications collection: every paper with a `videourl:` in its
-  front matter appears here automatically, so this page never needs its own
-  list to keep in sync.
+  Built from the publications collection: any paper with a `videoslug:` (or an
+  explicit `videourl:`) is a candidate, so this page never needs its own list.
+  where_exp cannot express "a or b", so candidates are filtered inside the loop.
+  Each entry is rendered hidden and revealed by the probe script in
+  footer/custom.html only if the file is actually in the repo.
 {% endcomment %}
-{% assign vids = site.publications | where_exp: "p", "p.videourl" | sort: "date" | reverse %}
+{% assign vids = site.publications | sort: "date" | reverse %}
 
 <p class="vid-intro">
   Narrated explainer videos for my papers, generated with
@@ -123,30 +152,29 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
   <a href="https://alinadevkota.github.io/Paper2Video/">Paper2Video site</a>.
 </p>
 
-{% if vids.size == 0 %}
-  <p class="vid-empty">No paper videos published yet &mdash; check back soon.</p>
-{% endif %}
 
 {% for p in vids %}
-  <article class="vid">
-    <div class="vid__player">
-      <video controls preload="metadata"{% if p.videoposter %} poster="{{ p.videoposter | relative_url }}"{% endif %}>
-        <source src="{{ p.videourl }}" type="video/mp4">
-        Your browser does not support embedded video.
-        <a href="{{ p.videourl }}">Download the video</a> instead.
-      </video>
-    </div>
-
+  {% include video-url.html doc=p %}
+  {% if video_src %}
+  <article class="vid" data-video-probe="{{ video_src }}" hidden>
     <h2 class="vid__title"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h2>
 
     {% if p.authors %}
       <p class="vid__authors">{{ p.authors | replace: 'A. Devkota', '<strong>A. Devkota</strong>' }}</p>
     {% endif %}
 
-    {% if p.venue %}
-      {% assign vid_year = p.date | date: "%Y" %}
-      <span class="vid__venue">{{ p.venue }}{% unless p.venue contains vid_year %} &middot; {{ vid_year }}{% endunless %}</span>
-    {% endif %}
+    <p class="vid__meta">
+      {% if p.venue %}<span class="vid__venue">{{ p.venue }}</span>{% endif %}
+      {% if p.date %}<span class="vid__date">{{ p.date | date: "%b %Y" }}</span>{% endif %}
+    </p>
+
+    <div class="vid__player">
+      <video controls preload="metadata"{% if video_poster %} poster="{{ video_poster }}"{% endif %}>
+        <source src="{{ video_src }}" type="video/mp4">
+        Your browser does not support embedded video.
+        <a href="{{ video_src }}">Download the video</a> instead.
+      </video>
+    </div>
 
     <p class="vid__links">
       <a href="{{ p.url | relative_url }}">Details</a>
@@ -156,4 +184,5 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
       {% if p.modelsurl %}<a href="{{ p.modelsurl }}">Models</a>{% endif %}
     </p>
   </article>
+  {% endif %}
 {% endfor %}

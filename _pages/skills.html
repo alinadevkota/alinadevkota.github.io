@@ -28,31 +28,57 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
   color: var(--global-text-color);
 }
 
-/* Core: filled. */
+/* Core takes the accent tint. A grey fill next to a plain outline was too
+   close a call; a tinted fill with a matching border reads as clearly
+   different from Working knowledge at a glance. */
 .sk-chip--core {
-  background: rgba(128, 128, 128, 0.14);
-}
-
-/* Working knowledge: outline only, same text color as Core. */
-.sk-chip--working {
-  border-color: var(--global-border-color);
-}
-
-/* Research & methods: accent tint, since this is the section that
-   distinguishes the page from a generic tool list. */
-.sk-chip--accent {
-  padding: 0.3em 0.8em;
   background: rgba(82, 173, 200, 0.13);
   border-color: rgba(82, 173, 200, 0.34);
+}
+
+/* Working knowledge: outline only, same text color as Core. The theme's
+   --global-border-color (#dfe1e3) is 1.31:1 on white and 1.20:1 on the legend's
+   tinted box, so the outline all but vanished there. These values clear 3:1 on
+   the page background and on the legend tint alike. */
+.sk-chip--working {
+  border-color: #7a8288;
+}
+
+html[data-theme="dark"] .sk-chip--working {
+  border-color: #9aa0a6;
+}
+
+/* Research & methods keeps the larger chip, now with the neutral fill. */
+.sk-chip--accent {
+  padding: 0.3em 0.8em;
+  background: rgba(128, 128, 128, 0.14);
   font-size: 0.92em;
 }
 
 /* --- Legend --------------------------------------------------------- */
 
+/* Boxed like the citation block on the paper pages, so it reads as a key
+   rather than as another row of skills - its sample chips are deliberately
+   identical to the real ones, which is exactly why it needed a frame. */
 .sk-legend {
-  margin: 0 0 1.8em;
-  padding-bottom: 1.3em;
-  border-bottom: 1px solid var(--global-border-color);
+  margin: 0 0 2.1em;
+  padding: 0.85em 1.1em 0.95em;
+  background: rgba(128, 128, 128, 0.08);
+  border-left: 3px solid var(--global-link-color);
+  border-radius: 3px;
+}
+
+.sk-legend__label {
+  margin: 0 0 0.45em;
+  font-size: 0.7em;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--sec-text);
+}
+
+.sk-legend__items {
+  margin: 0;
   font-size: 0.85em;
   line-height: 2.1;
   color: var(--sec-text);
@@ -118,11 +144,14 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
 }
 </style>
 
-<p class="sk-legend">
-  <span class="sk-chip sk-chip--core">Core</span> used regularly across research and industry projects.
-  <span class="sk-sep">|</span>
-  <span class="sk-chip sk-chip--working">Working knowledge</span> used on specific projects.
-</p>
+<div class="sk-legend">
+  <p class="sk-legend__label">How to read this page</p>
+  <p class="sk-legend__items">
+    <span class="sk-chip sk-chip--core">Core</span> used regularly across research and industry projects.
+    <span class="sk-sep">|</span>
+    <span class="sk-chip sk-chip--working">Working knowledge</span> used on specific projects.
+  </p>
+</div>
 
 <dl class="sk-list">
 

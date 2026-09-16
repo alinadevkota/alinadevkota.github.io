@@ -225,7 +225,8 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
         {% if post.projecturl %}<a href="{{ post.projecturl }}">Project</a>{% endif %}
         {% if post.codeurl %}<a href="{{ post.codeurl }}">Code</a>{% endif %}
         {% if post.modelsurl %}<a href="{{ post.modelsurl }}">Models</a>{% endif %}
-        {% if post.videourl %}<a href="{{ post.videourl }}">Video</a>{% endif %}
+        {% include video-url.html doc=post %}
+        {% if video_src %}<a href="{{ video_src }}" data-video-probe="{{ video_src }}" hidden>Video</a>{% endif %}
       </p>
     </div>
   </article>
