@@ -1,6 +1,7 @@
 ---
 permalink: /
 title: "About Me"
+description: "Alina Devkota is a PhD student in Computer Science at West Virginia University in the Machine Intelligence Lab, researching multimodal out-of-distribution detection, foundation models and federated learning for healthcare."
 author_profile: true
 redirect_from: 
   - /about/

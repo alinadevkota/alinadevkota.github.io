@@ -1,0 +1,25 @@
+{% comment %}
+  Highwire Press citation_* tags. These are what Google Scholar indexes, and
+  Google Search uses them to recognise a page as a scholarly article. Authors
+  must be one tag each, "Last, First" - the `authors:` field is stored as
+  "A. Devkota, J. Thrasher, ...", so it is split and flipped here.
+{% endcomment %}
+{% if page.collection == 'publications' %}
+  <meta name="citation_title" content="{{ page.title | strip_html | escape }}">
+  {% if page.authors %}
+    {% assign author_list = page.authors | split: ',' %}
+    {% for a in author_list %}
+      {% assign nm = a | strip %}
+      {% unless nm == '' or nm contains 'et al' %}
+        {% assign parts = nm | split: ' ' %}
+        {% assign surname = parts | last %}
+        {% assign initials = nm | remove: surname | strip %}
+        <meta name="citation_author" content="{{ surname }}, {{ initials }}">
+      {% endunless %}
+    {% endfor %}
+  {% endif %}
+  {% if page.date %}<meta name="citation_publication_date" content="{{ page.date | date: '%Y/%m/%d' }}">{% endif %}
+  {% if page.venue %}<meta name="citation_journal_title" content="{{ page.venue | strip_html | escape }}">{% endif %}
+  {% if page.paperurl %}<meta name="citation_pdf_url" content="{{ page.paperurl }}">{% endif %}
+  <meta name="citation_abstract_html_url" content="{{ page.url | absolute_url }}">
+{% endif %}
