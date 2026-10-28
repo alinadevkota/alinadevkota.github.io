@@ -337,6 +337,7 @@ window.PUBSORT = {
       /* Lets the cards show their year when the heading no longer carries it. */
       list.dataset.group = (window.PUBSORT[mode] ? mode : 'date');
       empty.hidden = shown.length > 0;
+      buildNav(shown, m);
       /* Say "4 of 10" only while a filter is narrowing things. */
       countN.textContent = shown.length === total
         ? total
@@ -356,6 +357,83 @@ window.PUBSORT = {
       var active = bar.querySelector('.publist__sort[aria-pressed="true"]');
       draw(active ? active.dataset.sort : 'date', this.value.trim().toLowerCase());
     });
+
+    /* --- Reading view ---------------------------------------------------
+       Two ways through the same list: short summaries, or the full abstracts
+       with an index beside them. The abstract is already in the page, lifted
+       from each paper's own body at build time, so switching is instant and
+       costs no requests. */
+    var shell   = document.getElementById('publist-shell');
+    var navList = document.getElementById('publist-nav-list');
+    var view    = document.getElementById('pubview');
+    var VIEW_KEY = 'pub-view';
+
+    function buildNav(shown, mode) {
+      if (!navList) return;
+      var frag = document.createDocumentFragment(), group = null;
+      shown.forEach(function (card) {
+        var k = mode.key(card);
+        if (k !== group) {
+          group = k;
+          var h = document.createElement('p');
+          h.className = 'publist__nav-grp';
+          h.textContent = k;
+          frag.appendChild(h);
+        }
+        var a = document.createElement('a');
+        a.href = '#' + card.id;
+        var t = card.querySelector('.pub__title');
+        a.textContent = t ? t.textContent.trim() : card.id;
+        frag.appendChild(a);
+      });
+      navList.textContent = '';
+      navList.appendChild(frag);
+    }
+
+    function setView(v) {
+      if (!shell) return;
+      shell.dataset.view = v;
+      Array.prototype.forEach.call(view.querySelectorAll('.pubview__opt'), function (b) {
+        b.setAttribute('aria-pressed', String(b.dataset.view === v));
+      });
+      try { localStorage.setItem(VIEW_KEY, v); } catch (e) {}
+    }
+
+    if (view && shell) {
+      /* Sit the switch on the same line as the page title. */
+      var title = document.querySelector('.page__title');
+      if (title && title.parentNode) {
+        var row = document.createElement('div');
+        row.className = 'pubview-row';
+        title.parentNode.insertBefore(row, title);
+        row.appendChild(title);
+        row.appendChild(view);
+      }
+      view.hidden = false;
+
+      var saved = null;
+      try { saved = localStorage.getItem(VIEW_KEY); } catch (e) {}
+      setView(saved === 'full' ? 'full' : 'brief');
+
+      view.addEventListener('click', function (e) {
+        var b = e.target.closest('.pubview__opt');
+        if (b) setView(b.dataset.view);
+      });
+
+      /* The index scrolls rather than navigates: every paper is on this page. */
+      navList.addEventListener('click', function (e) {
+        var a = e.target.closest('a');
+        if (!a) return;
+        var card = document.getElementById(a.getAttribute('href').slice(1));
+        if (!card) return;
+        e.preventDefault();
+        e.stopPropagation();
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        Array.prototype.forEach.call(navList.querySelectorAll('a'), function (x) {
+          x.classList.toggle('is-active', x === a);
+        });
+      });
+    }
 
     /* Mark the summaries whose text actually overflows three lines, so the
        fade and the leading ellipsis only appear where something was cut.
@@ -397,6 +475,11 @@ window.PUBSORT = {
       var link = card.querySelector('.pub__title a');
       if (link) link.click();
     });
+    /* Draw once on load. The order is unchanged - Liquid already rendered the
+       list newest-first - but it populates the jump index and sets
+       data-group, so switching to Abstracts works before any sort is used. */
+    draw('date', '');
+    markClipped();
   }
 
   window.pubListInit = init;
