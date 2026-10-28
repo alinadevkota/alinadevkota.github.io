@@ -309,6 +309,9 @@
 
   .pub-body .pub-body__text { order: 1; }
   .pub-body .pub-teaser     { order: 2; }
+  /* Without a video the column is reordered, so the extra figures have to
+     be pushed past the lead one as well as past the abstract. */
+  .pub-body .pub-teaser--rest { order: 3; }
 
   .pub-body__text > h2:first-child {
     margin-top: 0;
@@ -334,7 +337,7 @@
       clear: both;                     /* keep the video clear of the float */
     }
 
-    .pub-body--split .pub-teaser {
+    .pub-body--split .pub-teaser--lead {
       float: right;
       /* Wider than the grid version could afford: because the text reflows to
          full width below the figure, only the first few lines are narrowed. */
@@ -342,9 +345,18 @@
       margin: 0.3em 0 1.1em 1.8em;
     }
 
-    .pub-body--split .pub-teaser img {
+    .pub-body--split .pub-teaser--lead img {
       width: 100%;
       max-height: none;
+    }
+
+    .pub-body--split .pub-teaser--sm {
+      width: 20em;
+    }
+
+    /* Figures after the abstract run full width below the floated one. */
+    .pub-body--split .pub-teaser--rest {
+      clear: both;
     }
 
     /* A block box still spans the full width beside a float - only its line
@@ -353,6 +365,30 @@
     .pub-body--split .pub-body__text > h2 {
       overflow: hidden;
     }
+  }
+
+  /* "coming soon" marker for a paper with no URL yet. Deliberately a <span>,
+     not an <a>: it must not look or behave like a link. */
+  .page__content .pub-actions__pending,
+  .pub__links-pending {
+    padding: 0.3em 1em;
+    border: 1px dashed var(--global-dark-border-color);
+    border-radius: 3px;
+    font-size: 0.85em;
+    font-weight: 600;
+    font-style: italic;
+    white-space: nowrap;
+    color: #696f75;
+  }
+
+  .pub__links-pending {
+    padding: 0.16em 0.7em;
+    font-size: 0.8em;
+  }
+
+  html[data-theme="dark"] .page__content .pub-actions__pending,
+  html[data-theme="dark"] .pub__links-pending {
+    color: #bcc0c4;
   }
 
   /* Embedded explainer video on a publication page: player left, note right. */
@@ -455,6 +491,33 @@
     background: var(--global-bg-color);
     border: 1px solid var(--global-border-color);
     border-radius: 4px;
+  }
+
+  /* Figures from a `figures:` list are the paper's own diagrams rather than a
+     single teaser, so they are given the full column: a taller cap means the
+     width limit binds first for anything wider than about 2.2:1, and a stack
+     of wide figures then lines up at one edge instead of each one ending at a
+     different width. */
+  .pub-teaser--listed img {
+    max-height: 460px;
+  }
+
+  /* `teaser_small: true` in the front matter. Some lead figures are simple
+     enough to read at a smaller size, and shrinking them keeps the abstract
+     from being squeezed into a narrow column beside the float. */
+  .pub-teaser--sm img {
+    max-height: 260px;
+  }
+
+  /* The paper's own figures: everything below the abstract, plus the lead
+     figure on a page with no video, where it is stacked with the rest rather
+     than floated. Both caps are needed because these range from near-square
+     plots to 3.8:1 strips - the width cap holds back the wide ones, the height
+     cap the tall ones. */
+  .pub-teaser--rest img,
+  .pub-body:not(.pub-body--split) .pub-teaser--listed img {
+    max-width: 78%;
+    max-height: 360px;
   }
 
   .pub-teaser__caption {

@@ -11,11 +11,12 @@ paperurl: 'https://www.researchgate.net/profile/Sushant-Gautam/publication/33004
 videoslug: 'sranking'
 citation: 'Gautam, S., Shikha, S., Devkota, A. and Pyakurel, S., 2018. Sentence Ranking and Answer Pinpointing in Online Discussion Forums Utilising User-generated Metrics and Highlights. Proceedings of the NaSCoIT.'
 teaser: images/publications/sranking_teaser.png
+teaser_small: true
 ---
 
 {% comment %}
-  Paper-page header: authors, venue, action links, then the figure.
-  `figure:` overrides `teaser:` when present; `teaser:` is the fallback.
+  Paper-page header: authors, venue, action links, then the figure(s).
+  Set `figures:` for several, or `figure:` / `teaser:` for a single one.
 {% endcomment %}
 {% if page.authors %}
 <p class="pub-authors">{{ page.authors | replace: 'A. Devkota', '<strong>A. Devkota</strong>' }}</p>
@@ -39,13 +40,7 @@ teaser: images/publications/sranking_teaser.png
 
 <div class="pub-body{% if video_src %} pub-body--split{% endif %}">
 
-{% assign pub_figure = page.figure | default: page.teaser %}
-{% if pub_figure %}
-<p class="pub-teaser">
-  <img src="{{ pub_figure | relative_url }}" alt="{{ page.figure_alt | default: page.title | escape }}">
-  {% if page.figure_caption %}<span class="pub-teaser__caption">{{ page.figure_caption }}</span>{% endif %}
-</p>
-{% endif %}
+{% include pub-figures.html position="lead" %}
 
 <div class="pub-body__text" markdown="1">
 
@@ -54,6 +49,8 @@ teaser: images/publications/sranking_teaser.png
 This work presents a framework for extracting precise answers from online discussion forums by combining sentence ranking with user-generated metrics and highlights. The approach enables accurate answer pinpointing, improving search relevance and supporting better question-answering in forums.
 
 </div>
+
+{% include pub-figures.html position="rest" %}
 
 </div>
 

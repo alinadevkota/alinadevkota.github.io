@@ -1,0 +1,40 @@
+{% comment %}
+  Figures on a publication page.
+
+  `figures:` in the front matter is a list, each entry with `src` and an
+  optional `alt` / `caption`. Without it a single image is used: `figure:` if
+  set, otherwise the `teaser:`.
+
+  Called twice per page. position="lead" renders the first figure, which goes
+  above the abstract - or, when the page has a video and the body is in the
+  split layout, floats beside it. position="rest" renders everything after it,
+  which always runs full width below the abstract. Splitting the two is what
+  keeps the floated layout from collapsing: a second figure placed before the
+  abstract would clear the float and leave the column empty beside it.
+{% endcomment %}
+
+{% if page.figures %}
+  {% if include.position == "rest" %}
+    {% assign fig_offset = 1 %}
+    {% assign fig_limit = 99 %}
+    {% assign fig_place = "pub-teaser--rest" %}
+  {% else %}
+    {% assign fig_offset = 0 %}
+    {% assign fig_limit = 1 %}
+    {% capture fig_place %}pub-teaser--lead{% if page.teaser_small %} pub-teaser--sm{% endif %}{% endcapture %}
+  {% endif %}
+  {% for fig in page.figures offset: fig_offset limit: fig_limit %}
+<p class="pub-teaser pub-teaser--listed {{ fig_place }}">
+  <img src="{{ fig.src | relative_url }}" alt="{{ fig.alt | default: page.title | escape }}">
+  {% if fig.caption %}<span class="pub-teaser__caption">{{ fig.caption }}</span>{% endif %}
+</p>
+  {% endfor %}
+{% elsif include.position != "rest" %}
+  {% assign pub_figure = page.figure | default: page.teaser %}
+  {% if pub_figure %}
+<p class="pub-teaser pub-teaser--lead{% if page.teaser_small %} pub-teaser--sm{% endif %}">
+  <img src="{{ pub_figure | relative_url }}" alt="{{ page.figure_alt | default: page.title | escape }}">
+  {% if page.figure_caption %}<span class="pub-teaser__caption">{{ page.figure_caption }}</span>{% endif %}
+</p>
+  {% endif %}
+{% endif %}

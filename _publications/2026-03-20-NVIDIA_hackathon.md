@@ -11,11 +11,12 @@ paperurl: 'https://osf.io/preprints/biohackrxiv/5psfj'
 videoslug: 'nvidia_hackathon'
 citation: 'Mu, J., et al., 2026. Towards Federated Learning Across Biobanks: Prototype Software from the 2026 Carnegie Mellon University–NVIDIA Hackathon. BioHackrXiv. https://doi.org/10.37044/osf.io/5psfj_v1.'
 teaser: /images/publications/nvidia_hackathon_teaser.png
+teaser_small: true
 ---
 
 {% comment %}
-  Paper-page header: authors, venue, action links, then the figure.
-  `figure:` overrides `teaser:` when present; `teaser:` is the fallback.
+  Paper-page header: authors, venue, action links, then the figure(s).
+  Set `figures:` for several, or `figure:` / `teaser:` for a single one.
 {% endcomment %}
 {% if page.authors %}
 <p class="pub-authors">{{ page.authors | replace: 'A. Devkota', '<strong>A. Devkota</strong>' }}</p>
@@ -39,13 +40,7 @@ teaser: /images/publications/nvidia_hackathon_teaser.png
 
 <div class="pub-body{% if video_src %} pub-body--split{% endif %}">
 
-{% assign pub_figure = page.figure | default: page.teaser %}
-{% if pub_figure %}
-<p class="pub-teaser">
-  <img src="{{ pub_figure | relative_url }}" alt="{{ page.figure_alt | default: page.title | escape }}">
-  {% if page.figure_caption %}<span class="pub-teaser__caption">{{ page.figure_caption }}</span>{% endif %}
-</p>
-{% endif %}
+{% include pub-figures.html position="lead" %}
 
 <div class="pub-body__text" markdown="1">
 
@@ -54,6 +49,8 @@ teaser: /images/publications/nvidia_hackathon_teaser.png
 The Carnegie Mellon University-NVIDIA Federated Learning Hackathon for Biomedical Applications (January 7-9, 2026) convened researchers from academia, government, and industry to implement federated frameworks for disease subtyping, genetic association studies, and multimodal clinical prediction using NVIDIA FLARE. This preprint presents ten projects spanning genome-wide association analyses, histopathology harmonization, pangenome construction, ancestry deconvolution, rare disease stratification, cancer subtyping, polygenic risk score aggregation, and multimodal fusion. These proofs of principle collectively demonstrate both the versatility of federated learning for biomedical applications and the technical considerations required for successful deployment.
 
 </div>
+
+{% include pub-figures.html position="rest" %}
 
 </div>
 

@@ -11,11 +11,12 @@ paperurl: 'https://www.researchgate.net/profile/Nanda-Adhikari/publication/35370
 videoslug: 'nasco'
 citation: 'Adhikari, N.B., Gautam, S., Devkota, A., Shikha, S., Pyakurel, S. and Adhikari, M.P., 2020, January. Near Real-Time Mobile Profiling and Modeling of Fine-Scale Environmental Proxies Along Major Road Lines of Nepal. In International Conference on Mobile Computing and Sustainable Informatics (pp. 605-617). Cham: Springer International Publishing.'
 teaser: images/publications/nasco_teaser.png
+teaser_small: true
 ---
 
 {% comment %}
-  Paper-page header: authors, venue, action links, then the figure.
-  `figure:` overrides `teaser:` when present; `teaser:` is the fallback.
+  Paper-page header: authors, venue, action links, then the figure(s).
+  Set `figures:` for several, or `figure:` / `teaser:` for a single one.
 {% endcomment %}
 {% if page.authors %}
 <p class="pub-authors">{{ page.authors | replace: 'A. Devkota', '<strong>A. Devkota</strong>' }}</p>
@@ -39,13 +40,7 @@ teaser: images/publications/nasco_teaser.png
 
 <div class="pub-body{% if video_src %} pub-body--split{% endif %}">
 
-{% assign pub_figure = page.figure | default: page.teaser %}
-{% if pub_figure %}
-<p class="pub-teaser">
-  <img src="{{ pub_figure | relative_url }}" alt="{{ page.figure_alt | default: page.title | escape }}">
-  {% if page.figure_caption %}<span class="pub-teaser__caption">{{ page.figure_caption }}</span>{% endif %}
-</p>
-{% endif %}
+{% include pub-figures.html position="lead" %}
 
 <div class="pub-body__text" markdown="1">
 
@@ -54,6 +49,8 @@ teaser: images/publications/nasco_teaser.png
 We present a methodology using GPS-enabled mobile sensors to collect and model fine-scale environmental proxies (e.g., temperature, CO₂, PM₂.₅) along major roadways in Nepal, demonstrating the effectiveness of ARIMA and RNNs for real-time and historical climate modeling.
 
 </div>
+
+{% include pub-figures.html position="rest" %}
 
 </div>
 
