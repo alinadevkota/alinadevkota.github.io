@@ -131,6 +131,11 @@
 <script>
 /* Soft navigation across the whole site.
 
+   NOTE: use block comments only in this file. compress_html collapses each
+   inline script onto one line in the production build, so a // comment
+   would silently disable everything after it - the symptom is that soft
+   navigation works locally and not on GitHub Pages.
+
    Every link stays a real <a> to a real, server-rendered URL - that is what
    keeps the pages indexable and shareable. This only intercepts the click,
    fetches the target and swaps the content in, so the masthead, the theme
@@ -206,7 +211,7 @@
         return r.text();
       })
       .then(function (html) {
-        if (mine !== token) return;                      // a later click won
+        if (mine !== token) return;                      /* a later click won */
         var doc = new DOMParser().parseFromString(html, 'text/html');
         var newMain = doc.getElementById('main');
         if (!newMain) throw new Error('no #main');
@@ -231,7 +236,7 @@
         window.scrollTo(0, 0);
       })
       .catch(function () {
-        if (mine === token) location.href = url;          // let the browser do it
+        if (mine === token) location.href = url;          /* let the browser do it */
       });
   }
 
@@ -242,12 +247,12 @@
     if (a.origin !== location.origin) return;
 
     var raw = a.getAttribute('href');
-    if (!raw || raw.charAt(0) === '#') return;            // in-page anchor
-    if (SKIP.test(a.pathname)) return;                    // a file, not a page
+    if (!raw || raw.charAt(0) === '#') return;            /* in-page anchor */
+    if (SKIP.test(a.pathname)) return;                    /* a file, not a page */
     if (a.pathname === location.pathname && a.hash) return;
 
     if (a.pathname.replace(/\/$/, '') === location.pathname.replace(/\/$/, '')) {
-      e.preventDefault();                                  // already here
+      e.preventDefault();                                  /* already here */
       return;
     }
     e.preventDefault();
