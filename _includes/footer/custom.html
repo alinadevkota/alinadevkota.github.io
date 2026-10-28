@@ -46,6 +46,38 @@
 </script>
 
 <!-- end custom footer snippets -->
+
+<script>
+/* How papers are grouped and ordered, shared by the index pane on a paper
+   page and the publications list, so the two can never drift apart. Both
+   render the same data-* attributes; only the markup around them differs.
+
+   NOTE: block comments only in this file. compress_html collapses each
+   inline script onto one line in the production build, so a // comment
+   would silently disable everything after it. */
+window.PUBSORT = {
+  date: {
+    key: function (el) { return el.dataset.year; },
+    cmp: function (a, b) { return b.dataset.date.localeCompare(a.dataset.date); }
+  },
+  venue: {
+    key: function (el) { return el.dataset.venuetype; },
+    cmp: function (a, b) {
+      return (a.dataset.venueorder - b.dataset.venueorder)
+          || b.dataset.date.localeCompare(a.dataset.date);
+    }
+  },
+  topic: {
+    key: function (el) { return el.dataset.topic; },
+    cmp: function (a, b) {
+      /* Group order comes from _data/topics.yml, not the alphabet. */
+      return (a.dataset.topicorder - b.dataset.topicorder)
+          || a.dataset.topic.localeCompare(b.dataset.topic)
+          || b.dataset.date.localeCompare(a.dataset.date);
+    }
+  }
+};
+</script>
 <script>
 /* Paper-page index: regroup and filter.
 
@@ -68,21 +100,7 @@
     var filter = aside.querySelector('.pubx__filter');
     var items  = Array.prototype.slice.call(list.querySelectorAll('.pubx__item'));
 
-    var MODES = {
-      date:  { key: function (el) { return el.dataset.year; },
-               cmp: function (a, b) { return b.dataset.date.localeCompare(a.dataset.date); } },
-      venue: { key: function (el) { return el.dataset.venuetype; },
-               cmp: function (a, b) {
-                 return (a.dataset.venueorder - b.dataset.venueorder)
-                     || b.dataset.date.localeCompare(a.dataset.date); } },
-      topic: { key: function (el) { return el.dataset.topic; },
-               cmp: function (a, b) {
-                 /* Groups follow the order set in pub-index.html, not the
-                    alphabet, so the newest lines of work lead. */
-                 return (a.dataset.topicorder - b.dataset.topicorder)
-                     || a.dataset.topic.localeCompare(b.dataset.topic)
-                     || b.dataset.date.localeCompare(a.dataset.date); } }
-    };
+    var MODES = window.PUBSORT;
 
     function draw(mode, needle) {
       var m = MODES[mode] || MODES.date;
@@ -192,6 +210,7 @@
   function afterSwap(scope) {
     if (window.probeVideos) window.probeVideos(scope);
     if (window.pubxInit) window.pubxInit();
+    if (window.pubListInit) window.pubListInit();
     markIndex();
     rebindTheme();
     if (window.MathJax && window.MathJax.typesetPromise) {
@@ -265,5 +284,122 @@
 
   /* So the first Back press returns here rather than to the page before. */
   history.replaceState({ soft: true }, '', location.href);
+})();
+</script>
+
+<script>
+/* Publications list: regroup and filter in place.
+
+   The same contract as the index pane - Liquid renders every paper grouped
+   by year, and this reorders those same <article> nodes and rewrites the
+   headings. Nothing is created or destroyed, so the teaser images, the
+   video-probe links and the "Details" links all survive untouched.
+
+   Exposed as window.pubListInit so soft navigation can wire it again after
+   bringing the page back.
+
+   NOTE: block comments only - see the note on window.PUBSORT above. */
+(function () {
+  function init() {
+    var list = document.getElementById('publist');
+    if (!list || list.dataset.wired) return;
+    list.dataset.wired = '1';
+
+    var bar    = document.querySelector('.publist__bar');
+    var empty  = document.querySelector('.publist__empty');
+    var countN = document.getElementById('publist-n');
+    var sorts  = bar.querySelectorAll('.publist__sort');
+    var filter = bar.querySelector('.publist__filter');
+    var items  = Array.prototype.slice.call(list.querySelectorAll('.pub'));
+    var total  = items.length;
+
+    function draw(mode, needle) {
+      var m = window.PUBSORT[mode] || window.PUBSORT.date;
+      var shown = items.filter(function (el) {
+        return !needle || el.dataset.find.indexOf(needle) !== -1;
+      }).sort(m.cmp);
+
+      var frag = document.createDocumentFragment(), group = null;
+      shown.forEach(function (el) {
+        var k = m.key(el);
+        if (k !== group) {
+          group = k;
+          var h = document.createElement('h2');
+          h.className = 'pub-year';
+          h.textContent = k;
+          frag.appendChild(h);
+        }
+        frag.appendChild(el);
+      });
+
+      list.textContent = '';
+      list.appendChild(frag);
+      /* Lets the cards show their year when the heading no longer carries it. */
+      list.dataset.group = (window.PUBSORT[mode] ? mode : 'date');
+      empty.hidden = shown.length > 0;
+      /* Say "4 of 10" only while a filter is narrowing things. */
+      countN.textContent = shown.length === total
+        ? total
+        : shown.length + ' of ' + total;
+    }
+
+    bar.addEventListener('click', function (e) {
+      var b = e.target.closest('.publist__sort');
+      if (!b) return;
+      Array.prototype.forEach.call(sorts, function (s) {
+        s.setAttribute('aria-pressed', String(s === b));
+      });
+      draw(b.dataset.sort, filter.value.trim().toLowerCase());
+    });
+
+    filter.addEventListener('input', function () {
+      var active = bar.querySelector('.publist__sort[aria-pressed="true"]');
+      draw(active ? active.dataset.sort : 'date', this.value.trim().toLowerCase());
+    });
+
+    /* Mark the summaries whose text actually overflows three lines, so the
+       fade and the leading ellipsis only appear where something was cut.
+       Re-measured on resize, since the line count depends on column width. */
+    function markClipped() {
+      Array.prototype.forEach.call(list.querySelectorAll('.pub__summary'), function (su) {
+        var p = su.querySelector('.pub__excerpt');
+        if (!p) return;
+        su.classList.remove('pub__summary--clipped');
+        if (p.scrollHeight > su.clientHeight + 1) {
+          su.classList.add('pub__summary--clipped');
+        }
+      });
+    }
+    markClipped();
+
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(markClipped, 150);
+    });
+
+    /* Regrouping and filtering move cards about but never change their
+       widths, so only a resize can change what is clipped. */
+
+    /* Clicking anywhere on a card opens that paper. It forwards to the title
+       link rather than navigating itself, so soft navigation handles it like
+       any other link and the behaviour stays in one place.
+
+       Done in script rather than by stretching the title link over the card
+       with a pseudo-element: that technique makes the card's text impossible
+       to select, and titles and author lists on this page get copied. */
+    list.addEventListener('click', function (e) {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var card = e.target.closest('.pub');
+      if (!card) return;
+      if (e.target.closest('a, button, input, summary')) return;
+      if (String(window.getSelection())) return;
+      var link = card.querySelector('.pub__title a');
+      if (link) link.click();
+    });
+  }
+
+  window.pubListInit = init;
+  init();
 })();
 </script>

@@ -12,8 +12,8 @@ author_profile: true
 /* Secondary text. The theme's --global-text-color-light is #bcc0c4, only
    1.83:1 on white, so it is unusable here; these two values are 5.08:1 in
    their respective modes - readable, but clearly lighter than body text. */
-:root { --sec-text: #696f75; }
-html[data-theme="dark"] { --sec-text: #bcc0c4; }
+:root { --sec-text: #696f75; --pub-bg-hover: #f2f2f3; }
+html[data-theme="dark"] { --sec-text: #bcc0c4; --pub-bg-hover: #525254; }
 
 /* Scoped to this page only. Theme --global-* custom properties are used so
    light and dark modes are both handled. */
@@ -22,6 +22,114 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
   margin: 0 0 1.6em;
   font-size: 0.92em;
   color: var(--sec-text);
+}
+
+/* --- Toolbar over the list -------------------------------------------- */
+
+.publist__bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem 1.4rem;
+  flex-wrap: wrap;
+  margin: 0 0 1.6em;
+  padding-bottom: 0.9em;
+  border-bottom: 1px solid var(--global-border-color);
+}
+
+.publist__count {
+  margin: 0;
+  font-size: 0.86em;
+  color: var(--sec-text);
+}
+
+.publist__count strong {
+  font-weight: 700;
+  color: var(--global-text-color);
+}
+
+.publist__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.publist__label {
+  font-size: 0.78em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sec-text);
+  white-space: nowrap;
+}
+
+.publist__sorts { display: flex; gap: 0.3em; }
+
+.publist__sort {
+  padding: 0.36em 0.78em;
+  border: 1px solid var(--global-border-color);
+  border-radius: 3px;
+  background: none;
+  font-family: inherit;
+  font-size: 0.8em;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--sec-text);
+  cursor: pointer;
+}
+
+.publist__sort:hover {
+  border-color: var(--global-link-color);
+  color: var(--global-link-color);
+}
+
+.publist__sort[aria-pressed="true"] {
+  background: var(--global-text-color);
+  border-color: var(--global-text-color);
+  color: var(--global-bg-color);
+}
+
+.publist__search { display: block; }
+
+.publist__filter {
+  width: 17rem;
+  max-width: 100%;
+  padding: 0.45em 0.7em;
+  border: 1px solid var(--global-border-color);
+  border-radius: 3px;
+  background: var(--global-bg-color);
+  color: var(--global-text-color);
+  font-family: inherit;
+  font-size: 0.84em;
+}
+
+.publist__filter:focus {
+  outline: none;
+  border-color: var(--global-link-color);
+}
+
+/* The theme rings focused controls with 5px of orange via a plain :focus
+   rule, which fires on mouse clicks too. Keyboard users keep a ring. */
+.publist__bar button:focus:not(:focus-visible),
+.publist__bar input:focus:not(:focus-visible) { outline: none; }
+
+.publist__bar button:focus-visible,
+.publist__bar input:focus-visible {
+  outline: 2px solid var(--global-link-color);
+  outline-offset: -2px;
+}
+
+.publist__empty {
+  padding: 2.4em 0;
+  text-align: center;
+  color: var(--sec-text);
+  font-size: 0.92em;
+}
+
+@media (max-width: 620px) {
+  .publist__controls { margin-left: 0; width: 100%; }
+  .publist__filter { width: 100%; }
 }
 
 /* --- Year heading ---------------------------------------------------- */
@@ -50,25 +158,50 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
 
 /* --- Entry ----------------------------------------------------------- */
 
+/* The whole card opens the paper. Negative margins let the hover tint have
+   padding without shifting the card's content out of alignment.
+
+   --pub-bg holds the card's current background as a solid colour. The fade
+   at the end of the summary reads it, so the strip matches the card in both
+   themes and while hovered - which an rgba() tint could not provide. */
 .pub {
+  --pub-bg: var(--global-bg-color);
+  position: relative;
   display: flex;
   gap: 1.25em;
   align-items: flex-start;
-  margin-bottom: 1.7em;
+  margin: 0 -0.9em 0.8em;
+  padding: 0.9em;
+  border-radius: 5px;
+  /* Longhand, not the `background` shorthand: a shorthand carrying a var()
+     becomes a pending substitution and was painting white in the dark theme
+     even though --pub-bg itself resolved to the dark colour. */
+  background-color: var(--pub-bg);
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+}
+
+.pub:hover,
+.pub:focus-within {
+  --pub-bg: var(--pub-bg-hover);
 }
 
 .pub:last-child {
   margin-bottom: 0;
 }
 
+/* Square, sized to the text beside it: with the three-line summary a card's
+   text block measures 212px (one-line title) or 237px (two lines), so 190px
+   stays comfortably under both while being a step down from the original
+   220px. Resize by changing all three values together. */
 .pub__figure {
-  flex: 0 0 220px;
+  flex: 0 0 190px;
 }
 
 .pub__figure img {
   display: block;
-  width: 220px;
-  height: 220px;
+  width: 190px;
+  height: 190px;
   padding: 4px;
   object-fit: cover;
   background: var(--global-bg-color);
@@ -83,7 +216,7 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
 
 .pub__title {
   margin: 0 0 0.3em;
-  font-size: 1.02em;
+  font-size: 0.94em;
   font-weight: 600;
   line-height: 1.4;
 }
@@ -100,7 +233,7 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
 
 .pub__authors {
   margin: 0 0 0.4em;
-  font-size: 0.88em;
+  font-size: 0.81em;
   line-height: 1.5;
   color: var(--sec-text);
 }
@@ -113,22 +246,89 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
 .pub__venue {
   display: inline-block;
   margin: 0 0 0.5em;
-  padding: 0.12em 0.6em;
+  padding: 0.14em 0.6em;
   /* darker of the two theme border colors, so the badge outline is visible */
   border: 1px solid var(--global-dark-border-color);
   border-radius: 3px;
-  font-size: 0.78em;
+  font-size: 0.72em;
   font-weight: 600;
   letter-spacing: 0.03em;
   color: var(--sec-text);
 }
 
-.pub__excerpt {
-  margin: 0 0 0.6em;
-  font-size: 0.9em;
+/* Three lines of summary, the third fading out under a "Read more" link.
+
+   Reserving space with a float left an awkward gap, because the text could
+   only wrap at a word boundary. Instead the third line is faded with a mask
+   and the link sits on top of the faded part. A mask rather than a painted
+   background: the card tints on hover and the whole site has a dark theme,
+   so there is no one colour a cover strip could use. */
+.pub__summary {
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 0.7em;
+  font-size: 0.84em;
   line-height: 1.6;
+  max-height: 4.8em;            /* 3 x 1.6 */
+}
+
+.pub__excerpt {
+  margin: 0;
   color: var(--global-text-color);
 }
+
+/* Hidden under the date grouping, where the heading is the year. */
+.pub__year {
+  display: none;
+  margin-left: 0.55em;
+  font-size: 0.72em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--sec-text);
+  vertical-align: 1px;
+}
+
+#publist:not([data-group="date"]) .pub__year {
+  display: inline-block;
+}
+
+
+
+/* Sits on the last line, carrying its own fade so whatever text runs under
+   it dissolves into the card instead of colliding with it. */
+.pub__more {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding-left: 3.2em;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--global-link-color);
+  background-image: linear-gradient(to right, transparent 0, var(--pub-bg) 2.6em);
+}
+
+/* The theme underlines links with `.archive a` on this layout (and
+   `.page__content a` on others), both of which outrank a bare .pub__more
+   rule. Scope to the card so it beats either. */
+.pub .pub__more { text-decoration: none; }
+.pub .pub__more:hover { text-decoration: underline; }
+
+/* Only shown where text was actually cut, which the script decides. */
+.pub__more-dots {
+  display: none;
+  margin-right: 0.45em;
+  color: var(--global-text-color);
+}
+
+.pub__summary--clipped .pub__more-dots { display: inline; }
+
+.pub__more-arrow {
+  display: inline-block;
+  margin-left: 0.35em;
+  transition: transform 0.15s ease;
+}
+
+.pub:hover .pub__more-arrow { transform: translateX(3px); }
 
 .pub__links {
   display: flex;
@@ -138,10 +338,10 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
 }
 
 .pub__links a {
-  padding: 0.16em 0.7em;
+  padding: 0.18em 0.7em;
   border: 1px solid var(--global-border-color);
   border-radius: 3px;
-  font-size: 0.8em;
+  font-size: 0.74em;
   font-weight: 600;
   text-decoration: none;
   color: var(--global-link-color);
@@ -175,8 +375,33 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
 {% endif %}
 
 {% assign pubs = site.publications | sort: "date" | reverse %}
+{% assign topic_order = site.data.topics.order %}
 {% assign shown_year = "" %}
 
+{% comment %}
+  Toolbar over the list: how many papers there are, a search box, and the
+  same three groupings the index pane on a paper page offers. Liquid renders
+  the list grouped by year; the script regroups and filters the very same
+  nodes, so with JavaScript off everything is still here and still grouped.
+{% endcomment %}
+<div class="publist__bar">
+  <p class="publist__count"><strong id="publist-n">{{ pubs | size }}</strong> papers</p>
+  <div class="publist__controls">
+    <span class="publist__label" id="publist-groupby">Group by</span>
+    <div class="publist__sorts" role="group" aria-labelledby="publist-groupby">
+      <button type="button" class="publist__sort" data-sort="date" aria-pressed="true">Date</button>
+      <button type="button" class="publist__sort" data-sort="venue" aria-pressed="false">Venue</button>
+      <button type="button" class="publist__sort" data-sort="topic" aria-pressed="false">Topic</button>
+    </div>
+    <label class="publist__search">
+      <span class="u-visually-hidden">Search publications</span>
+      <input type="search" class="publist__filter" placeholder="Search title, author, venue or topic&hellip;"
+             autocomplete="off" spellcheck="false">
+    </label>
+  </div>
+</div>
+
+<div class="publist" id="publist" data-group="date">
 {% for post in pubs %}
   {% assign year = post.date | date: "%Y" %}
   {% if year != shown_year %}
@@ -184,7 +409,19 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
     {% assign shown_year = year %}
   {% endif %}
 
-  <article class="pub">
+  {% assign primary = post.topics | first | default: "Other" %}
+  {% assign t_rank = 99 %}
+  {% for t in topic_order %}{% if t == primary %}{% assign t_rank = forloop.index %}{% endif %}{% endfor %}
+  {% capture vtype %}{% case post.venue_type %}{% when 'journal' %}Journals{% when 'preprint' %}Preprints{% else %}Conferences{% endcase %}{% endcapture %}
+
+  <article class="pub"
+    data-date="{{ post.date | date: '%Y-%m-%d' }}"
+    data-year="{{ year }}"
+    data-venuetype="{{ vtype | strip }}"
+    data-venueorder="{% case post.venue_type %}{% when 'journal' %}1{% when 'conference' %}2{% else %}3{% endcase %}"
+    data-topic="{{ primary | escape }}"
+    data-topicorder="{{ t_rank }}"
+    data-find="{{ post.title | append: ' ' | append: post.authors | append: ' ' | append: post.venue | append: ' ' | append: post.topics | join: ' ' | append: ' ' | append: post.excerpt | downcase | escape }}">
     {% comment %}
       Title and teaser both open this paper's own page. The published PDF is
       one click away from there, and from the "Paper" button below, so neither
@@ -208,17 +445,37 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
       {% if post.venue %}
         <span class="pub__venue">{{ post.venue }}</span>
       {% endif %}
+      {% comment %}
+        Shown only when the list is grouped by venue or topic; under the date
+        grouping the heading above already gives the year.
+      {% endcomment %}
+      <span class="pub__year">{{ year }}</span>
 
+      {% comment %}
+        Summary capped at three lines, with "Read more" sitting on the right
+        of the third line and the text wrapping around it. The link comes
+        first in the source because it is floated - see the CSS for how the
+        three lines are reserved.
+
+        "Read more" is a real link so it works without JavaScript, but it is
+        hidden from assistive tech and skipped in the tab order: the title
+        above already links to the same page, and announcing it twice adds
+        nothing.
+      {% endcomment %}
       {% if post.excerpt %}
-        <p class="pub__excerpt">{{ post.excerpt }}</p>
+        <div class="pub__summary">
+          <p class="pub__excerpt">{{ post.excerpt }}</p>
+          <a class="pub__more" href="{{ post.url | relative_url }}"
+             tabindex="-1" aria-hidden="true"><span class="pub__more-dots">&hellip;</span>Read more<span class="pub__more-arrow">&rarr;</span></a>
+        </div>
       {% endif %}
 
+      {% comment %}
+        No "Details" link: the whole card is clickable and opens this paper's
+        page. The title is still a real link, so that works with JavaScript
+        off and is what keyboard users tab to.
+      {% endcomment %}
       <p class="pub__links">
-        {% comment %}
-          "Details" links to the paper's own page (abstract, figure, citation).
-          It is not gated on post.citation - that page always exists.
-        {% endcomment %}
-        <a href="{{ post.url | relative_url }}">Details</a>
         {% if post.paperurl %}<a href="{{ post.paperurl }}">Paper</a>{% endif %}
         {% if post.paperurl_pending %}<span class="pub__links-pending">Paper &middot; coming soon</span>{% endif %}
         {% if post.projecturl %}<a href="{{ post.projecturl }}">Project</a>{% endif %}
@@ -230,3 +487,6 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
     </div>
   </article>
 {% endfor %}
+</div>
+
+<p class="publist__empty" hidden>No papers match that.</p>

@@ -1,0 +1,9 @@
+# Running order of the topic groups, used by the publications list and by the
+# index pane on paper pages so the two always agree. A paper files under the
+# FIRST entry of its own `topics:` list; a topic missing from here sorts last.
+order:
+  - Federated Learning
+  - Medical AI
+  - Vision-Language
+  - Foundation Models
+  - Earlier Work

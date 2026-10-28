@@ -546,8 +546,22 @@
 
   .pubx__sorts {
     display: flex;
+    align-items: center;
     gap: 0.3em;
+    flex-wrap: wrap;
   }
+
+  .pubx__label {
+    margin: 0 0.15em 0 0;
+    font-size: 0.68em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #696f75;
+    white-space: nowrap;
+  }
+
+  html[data-theme="dark"] .pubx__label { color: #bcc0c4; }
 
   .pubx .pubx__sort {
     padding: 0.36em 0.7em;
@@ -581,7 +595,7 @@
 
   /* The theme has no utility for this, and the filter's label must stay in the
      accessibility tree while being invisible. */
-  .pubx .u-visually-hidden {
+  .u-visually-hidden {
     position: absolute;
     width: 1px;
     height: 1px;

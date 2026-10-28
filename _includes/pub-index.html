@@ -13,16 +13,16 @@
 {% assign idx_pubs = site.publications | sort: "date" | reverse %}
 
 {% comment %}
-  Order of the topic groups. Alphabetical would open on "Earlier Work", so the
-  running order is set deliberately: current lines of work first, undergraduate
-  work last. A topic missing from this list sorts after the ones in it.
+  Order of the topic groups comes from _data/topics.yml, shared with the
+  publications list so both group the same way.
 {% endcomment %}
-{% assign topic_order = "Federated Learning|Medical AI|Vision-Language|Foundation Models|Earlier Work" | split: "|" %}
+{% assign topic_order = site.data.topics.order %}
 
 <aside class="pubx" aria-label="All publications">
   <div class="pubx__head">
     <p class="pubx__title">All papers <span class="pubx__count">{{ idx_pubs | size }}</span></p>
-    <div class="pubx__sorts" role="group" aria-label="Group the index by">
+    <div class="pubx__sorts" role="group" aria-labelledby="pubx-groupby">
+      <span class="pubx__label" id="pubx-groupby">Group by</span>
       <button type="button" class="pubx__sort" data-sort="date" aria-pressed="true">Date</button>
       <button type="button" class="pubx__sort" data-sort="venue" aria-pressed="false">Venue</button>
       <button type="button" class="pubx__sort" data-sort="topic" aria-pressed="false">Topic</button>
