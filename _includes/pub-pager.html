@@ -1,0 +1,55 @@
+{% comment %}
+  Previous / next for a paper page.
+
+  Not the theme's post_pagination.html, which walks the collection in date
+  ASCENDING order and so points "Previous" at the older paper - the opposite
+  direction to the index pane, which is newest first. These neighbours are
+  taken from the same ordering the pane uses, so the two agree.
+
+  Rendered server-side for the default (date) grouping; the index script
+  rewrites it when the pane is regrouped or filtered, so the pager always
+  follows whatever order is on screen.
+
+  Links are relative, so in-place navigation can intercept them - the theme's
+  version emitted absolute site URLs, which failed the same-origin check and
+  forced a full reload.
+{% endcomment %}
+
+{% assign ordered = site.publications | sort: "date" | reverse %}
+{% assign here = 0 %}
+{% for p in ordered %}{% if p.url == page.url %}{% assign here = forloop.index0 %}{% endif %}{% endfor %}
+{% assign prev_i = here | minus: 1 %}
+{% assign next_i = here | plus: 1 %}
+{% assign last_i = ordered | size | minus: 1 %}
+
+<nav class="pub-pager" aria-label="Previous and next paper">
+  {% if here > 0 %}
+    {% assign prev = ordered[prev_i] %}
+    <a class="pub-pager__link pub-pager__prev" href="{{ prev.url | relative_url }}" rel="prev">
+      <span class="pub-pager__label">Previous</span>
+      <span class="pub-pager__title">{{ prev.title }}</span>
+      <span class="pub-pager__meta">
+        <span class="pub-pager__v">{{ prev.venue_short | default: prev.venue }}</span>
+        <span class="pub-pager__dot" aria-hidden="true"></span>
+        <span class="pub-pager__d">{{ prev.date | date: "%b %Y" }}</span>
+      </span>
+    </a>
+  {% else %}
+    <a class="pub-pager__link pub-pager__prev" href="#" hidden></a>
+  {% endif %}
+
+  {% if here < last_i %}
+    {% assign next = ordered[next_i] %}
+    <a class="pub-pager__link pub-pager__next" href="{{ next.url | relative_url }}" rel="next">
+      <span class="pub-pager__label">Next</span>
+      <span class="pub-pager__title">{{ next.title }}</span>
+      <span class="pub-pager__meta">
+        <span class="pub-pager__v">{{ next.venue_short | default: next.venue }}</span>
+        <span class="pub-pager__dot" aria-hidden="true"></span>
+        <span class="pub-pager__d">{{ next.date | date: "%b %Y" }}</span>
+      </span>
+    </a>
+  {% else %}
+    <a class="pub-pager__link pub-pager__next" href="#" hidden></a>
+  {% endif %}
+</nav>

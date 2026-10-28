@@ -1,0 +1,72 @@
+{% comment %}
+  Index of every paper, shown beside the one being read.
+
+  Rendered by Liquid rather than built in the browser: each entry is a real
+  link to that paper's own URL, so the pages stay separately indexable and the
+  index still works with JavaScript off. The sort buttons and the filter box
+  only reorder and hide what is already here.
+
+  Grouping by topic uses a paper's FIRST topic, so every paper files under
+  exactly one heading instead of appearing several times in a navigation list.
+{% endcomment %}
+
+{% assign idx_pubs = site.publications | sort: "date" | reverse %}
+
+{% comment %}
+  Order of the topic groups. Alphabetical would open on "Earlier Work", so the
+  running order is set deliberately: current lines of work first, undergraduate
+  work last. A topic missing from this list sorts after the ones in it.
+{% endcomment %}
+{% assign topic_order = "Federated Learning|Medical AI|Vision-Language|Foundation Models|Earlier Work" | split: "|" %}
+
+<aside class="pubx" aria-label="All publications">
+  <div class="pubx__head">
+    <p class="pubx__title">All papers <span class="pubx__count">{{ idx_pubs | size }}</span></p>
+    <div class="pubx__sorts" role="group" aria-label="Group the index by">
+      <button type="button" class="pubx__sort" data-sort="date" aria-pressed="true">Date</button>
+      <button type="button" class="pubx__sort" data-sort="venue" aria-pressed="false">Venue</button>
+      <button type="button" class="pubx__sort" data-sort="topic" aria-pressed="false">Topic</button>
+    </div>
+    <label class="pubx__search">
+      <span class="u-visually-hidden">Filter the index</span>
+      <input type="search" class="pubx__filter" placeholder="Filter&hellip;" autocomplete="off" spellcheck="false">
+    </label>
+  </div>
+
+  <div class="pubx__list" id="pubx-list">
+    {% assign shown = "" %}
+    {% for p in idx_pubs %}
+      {% assign yr = p.date | date: "%Y" %}
+      {% if yr != shown %}
+        <p class="pubx__grp">{{ yr }}</p>
+        {% assign shown = yr %}
+      {% endif %}
+
+      {% assign vshort = p.venue_short | default: p.venue %}
+      {% assign primary = p.topics | first | default: "Other" %}
+      {% assign t_rank = 99 %}
+      {% for t in topic_order %}{% if t == primary %}{% assign t_rank = forloop.index %}{% endif %}{% endfor %}
+      {% capture vtype %}{% case p.venue_type %}{% when 'journal' %}Journals{% when 'preprint' %}Preprints{% else %}Conferences{% endcase %}{% endcapture %}
+
+      <a class="pubx__item{% if p.url == page.url %} is-current{% endif %}"
+         href="{{ p.url | relative_url }}"
+         {% if p.url == page.url %}aria-current="page"{% endif %}
+         data-date="{{ p.date | date: '%Y-%m-%d' }}"
+         data-year="{{ yr }}"
+         data-venuetype="{{ vtype | strip }}"
+         data-venueorder="{% case p.venue_type %}{% when 'journal' %}1{% when 'conference' %}2{% else %}3{% endcase %}"
+         data-topic="{{ primary | escape }}"
+         data-topicorder="{{ t_rank }}"
+         data-find="{{ p.title | append: ' ' | append: p.authors | append: ' ' | append: p.venue | append: ' ' | append: p.topics | join: ' ' | downcase | escape }}">
+        <span class="pubx__t">{{ p.title }}</span>
+        <span class="pubx__m">
+          <span class="pubx__v">{{ vshort }}</span>
+          <span class="pubx__dot" aria-hidden="true"></span>
+          <span class="pubx__d">{{ p.date | date: "%b %Y" }}</span>
+        </span>
+      </a>
+    {% endfor %}
+  </div>
+
+  <p class="pubx__empty" hidden>Nothing matches that.</p>
+</aside>

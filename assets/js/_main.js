@@ -24,11 +24,14 @@ const browserPref = window.matchMedia('(prefers-color-scheme: dark)').matches ? 
 
 // Set the theme on page load or when explicitly called
 let setTheme = (theme) => {
+  // Light is the default. Falling back to browserPref here meant a visitor on
+  // a dark-mode OS got the dark palette on a first visit; the toggle still
+  // stores an explicit choice and that choice still wins.
   const use_theme =
     theme ||
     localStorage.getItem("theme") ||
     $("html").attr("data-theme") ||
-    browserPref;
+    "light";
 
   if (use_theme === "dark") {
     $("html").attr("data-theme", "dark");
@@ -90,14 +93,9 @@ $(document).ready(function () {
   const scssLarge = 925;          // pixels, from /_sass/_themes.scss
   const scssMastheadHeight = 70;  // pixels, from the current theme (e.g., /_sass/theme/_default.scss)
 
-  // If the user hasn't chosen a theme, follow the OS preference
+  // Apply the stored choice, or light. The OS preference is deliberately not
+  // followed, so a first visit looks the same for everyone.
   setTheme();
-  window.matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener("change", (e) => {
-          if (!localStorage.getItem("theme")) {
-            setTheme(e.matches ? "dark" : "light");
-          }
-        });
 
   // Enable the theme toggle
   $('#theme-toggle').on('click', toggleTheme);

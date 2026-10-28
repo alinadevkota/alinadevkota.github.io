@@ -23,7 +23,14 @@ layout: default
     {% if page.date %}<meta itemprop="datePublished" content="{{ page.date | date: "%B %d, %Y" }}">{% endif %}
     {% if page.modified %}<meta itemprop="dateModified" content="{{ page.modified | date: "%B %d, %Y" }}">{% endif %}
 
-    <div class="page__inner-wrap">
+    <div class="page__inner-wrap{% if page.collection == 'publications' %} pub-shell{% endif %}">
+      {% comment %}
+        Paper pages put an index of every paper beside the record being read.
+        It is a grid column, so the header, abstract, figures, citation and
+        share row below all flow into the second column untouched.
+      {% endcomment %}
+      {% if page.collection == 'publications' %}{% include pub-index.html %}{% endif %}
+
       {% unless page.header.overlay_color or page.header.overlay_image %}
         <header>
           {% if page.title %}<h1 class="page__title" itemprop="headline">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</h1>{% endif %}
@@ -92,7 +99,15 @@ layout: default
 
       {% if page.share %}{% include social-share.html %}{% endif %}
 
-      {% include post_pagination.html %}
+      {% comment %}
+        Paper pages carry the whole index in the pane beside the record, so
+        previous/next only repeated navigation already on screen. The include
+        is still there - put back the pub-pager.html include here to restore
+        it. Every other collection keeps the theme's pager.
+      {% endcomment %}
+      {% unless page.collection == 'publications' %}
+        {% include post_pagination.html %}
+      {% endunless %}
     </div>
 
     {% if site.comments.provider and page.comments %}

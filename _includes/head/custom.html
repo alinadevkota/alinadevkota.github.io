@@ -3,7 +3,7 @@
 <!-- start custom head snippets -->
 
 <!-- Support for Academicons -->
-<link rel="stylesheet" href="{{ base_path }}/assets/css/academicons.css"/>
+<link rel="stylesheet" href="{{ '/assets/css/academicons.css' | relative_url }}"/>
 
 <!-- favicon from https://commons.wikimedia.org/wiki/File:OOjs_UI_icon_academic-progressive.svg -->
 <link rel="apple-touch-icon" sizes="180x180" href="{{ base_path }}/images/apple-touch-icon-180x180.png"/>
@@ -468,6 +468,359 @@
       padding-top: 0.9em;
       border-left: 0;
       border-top: 2px solid var(--global-border-color);
+    }
+  }
+
+  /* --- Paper page: index beside the record -----------------------------
+     .page__inner-wrap becomes a two-column grid on a paper page. The index
+     takes column one and spans every row; everything the theme already put
+     in there - header, content, citation, share, pager - is pushed into
+     column two without being moved in the markup.
+     Existing --global-* custom properties are used throughout, so this
+     inherits the site's light and dark palettes rather than adding a new one. */
+  @media (min-width: 1024px) {
+    .pub-shell {
+      display: grid;
+      grid-template-columns: 19.5rem minmax(0, 1fr);
+      column-gap: 2.2rem;
+      align-items: start;
+    }
+
+    .pub-shell > *:not(.pubx) {
+      grid-column: 2;
+      min-width: 0;
+    }
+
+    .pubx {
+      grid-column: 1;
+      /* `1 / -1` would resolve against the explicit grid, which has no rows
+         defined, and collapse to a single row - dropping the paper below the
+         index instead of beside it. A span comfortably larger than the number
+         of siblings keeps the column intact; the surplus rows are empty and
+         take no height. */
+      grid-row: 1 / span 30;
+      /* Follows the reader down a long paper, and scrolls on its own once the
+         list is taller than the viewport. */
+      position: sticky;
+      top: 1.5em;
+      max-height: calc(100vh - 3em);
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--global-border-color);
+      padding-right: 1.1rem;
+    }
+
+    .pubx__list {
+      overflow-y: auto;
+      min-height: 0;
+    }
+  }
+
+  .pubx {
+    margin: 0 0 2.2em;
+    font-size: 1em;
+  }
+
+  .pubx__head {
+    flex: 0 0 auto;
+    padding-bottom: 0.7em;
+    border-bottom: 1px solid var(--global-border-color);
+  }
+
+  .pubx__title {
+    margin: 0 0 0.6em;
+    font-size: 0.72em;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #696f75;
+  }
+
+  html[data-theme="dark"] .pubx__title { color: #bcc0c4; }
+
+  .pubx__count {
+    margin-left: 0.4em;
+    font-weight: 400;
+    opacity: 0.7;
+  }
+
+  .pubx__sorts {
+    display: flex;
+    gap: 0.3em;
+  }
+
+  .pubx .pubx__sort {
+    padding: 0.36em 0.7em;
+    border: 1px solid var(--global-border-color);
+    border-radius: 3px;
+    background: none;
+    /* A button does not inherit the page's font, so without this it fell back
+       to the UA default and rendered larger than the titles below it. */
+    font-family: inherit;
+    font-size: 0.75em;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #696f75;
+    cursor: pointer;
+  }
+
+  html[data-theme="dark"] .pubx .pubx__sort { color: #bcc0c4; }
+
+  .pubx .pubx__sort:hover {
+    border-color: var(--global-link-color);
+    color: var(--global-link-color);
+  }
+
+  .pubx .pubx__sort[aria-pressed="true"] {
+    background: var(--global-text-color);
+    border-color: var(--global-text-color);
+    color: var(--global-bg-color);
+  }
+
+  .pubx__search { display: block; }
+
+  /* The theme has no utility for this, and the filter's label must stay in the
+     accessibility tree while being invisible. */
+  .pubx .u-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .pubx__filter {
+    width: 100%;
+    margin-top: 0.55em;
+    padding: 0.45em 0.6em;
+    border: 1px solid var(--global-border-color);
+    border-radius: 3px;
+    background: var(--global-bg-color);
+    color: var(--global-text-color);
+    font-size: 0.8em;
+    font-family: inherit;
+  }
+
+  .pubx__filter:focus {
+    outline: none;
+    border-color: var(--global-link-color);
+  }
+
+  .pubx__grp {
+    margin: 0;
+    padding: 1em 0 0.4em;
+    font-size: 0.72em;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #696f75;
+  }
+
+  html[data-theme="dark"] .pubx__grp { color: #bcc0c4; }
+
+  .pubx__item {
+    display: block;
+    padding: 0.6em 0.7em 0.65em;
+    border-bottom: 1px solid var(--global-border-color);
+    /* The 3px marker is drawn for every row so nothing shifts when the
+       current paper changes. */
+    border-left: 3px solid transparent;
+    text-decoration: none;
+    color: var(--global-text-color);
+  }
+
+  /* A neutral translucent tint rather than --global-code-background-color:
+     that variable is #fafafa in the dark theme as well as the light one, so
+     the themed text colour lands on a near-white box and disappears. Grey at
+     low alpha darkens a light background and lightens a dark one. */
+  .pubx__item:hover {
+    background: rgba(128, 128, 128, 0.09);
+    text-decoration: none;
+  }
+
+  .pubx__item.is-current {
+    border-left-color: var(--global-link-color);
+    background: rgba(128, 128, 128, 0.16);
+  }
+
+  .pubx__t {
+    display: block;
+    font-size: 0.89em;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* The current paper is marked by the accent bar and the tint alone. Bolding
+     the title as well made it wider, so entries re-wrapped as you moved
+     between papers and the whole list shifted under the pointer. */
+
+  .pubx__m {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-top: 0.32em;
+    font-size: 0.75em;
+    color: #696f75;
+  }
+
+  html[data-theme="dark"] .pubx__m { color: #bcc0c4; }
+
+  .pubx__v {
+    font-weight: 600;
+    color: var(--global-link-color);
+  }
+
+  .pubx__dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.6;
+  }
+
+  /* --- Previous / next, matched to the index pane --------------------- */
+  .pub-pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+    margin: 2.2em 0 0;
+    padding-top: 1.4em;
+    border-top: 1px solid var(--global-border-color);
+  }
+
+  .pub-pager__link {
+    display: block;
+    padding: 0.85em 1em;
+    border: 1px solid var(--global-border-color);
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--global-text-color);
+  }
+
+  .pub-pager__link:hover {
+    border-color: var(--global-link-color);
+    background: rgba(128, 128, 128, 0.07);
+    text-decoration: none;
+  }
+
+  /* The right-hand card reads right-aligned so the pair mirrors. */
+  .pub-pager__next { text-align: right; }
+
+  .pub-pager__label {
+    display: block;
+    margin-bottom: 0.3em;
+    font-size: 0.72em;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #696f75;
+  }
+
+  html[data-theme="dark"] .pub-pager__label { color: #bcc0c4; }
+
+  .pub-pager__prev .pub-pager__label::before { content: "\2190\00a0"; }
+  .pub-pager__next .pub-pager__label::after  { content: "\00a0\2192"; }
+
+  .pub-pager__title {
+    display: block;
+    font-size: 0.89em;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .pub-pager__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-top: 0.35em;
+    font-size: 0.75em;
+    color: #696f75;
+  }
+
+  .pub-pager__next .pub-pager__meta { justify-content: flex-end; }
+
+  html[data-theme="dark"] .pub-pager__meta { color: #bcc0c4; }
+
+  .pub-pager__v { font-weight: 600; color: var(--global-link-color); }
+
+  .pub-pager__dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.6;
+  }
+
+  .pub-pager a:focus:not(:focus-visible) { outline: none; }
+
+  @media (max-width: 600px) {
+    .pub-pager { grid-template-columns: 1fr; }
+    .pub-pager__next { text-align: left; }
+    .pub-pager__next .pub-pager__meta { justify-content: flex-start; }
+    .pub-pager__next .pub-pager__label::after { content: "\00a0\2192"; }
+  }
+
+  /* The theme rings focused links with 5px of $warning-color (#f89406) via
+     a:focus - not :focus-visible - so a mouse click leaves an orange box
+     behind. Drop it for pointer focus, keep it for keyboard users, and give
+     them a ring that matches the rest of the page. */
+  .pubx a:focus:not(:focus-visible),
+  .pubx button:focus:not(:focus-visible),
+  .pubx input:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  .pubx a:focus-visible,
+  .pubx button:focus-visible,
+  .pubx input:focus-visible {
+    outline: 2px solid var(--global-link-color);
+    outline-offset: -2px;
+  }
+
+  /* The swapped-in record takes focus so keyboard and screen-reader users
+     land on the new paper rather than at the top of the document; it is not
+     an interactive control, so it draws no ring. */
+  /* Applies to every page now that soft navigation focuses the new heading,
+     not just paper pages. A heading is not an interactive control, so it
+     draws no ring; it is focused purely so keyboard and screen-reader users
+     land on the new content instead of the top of the document. */
+  #main [tabindex="-1"]:focus {
+    outline: none;
+  }
+
+  /* Brief dim while the next record is fetched. The index is deliberately
+     left at full strength: it is not being replaced. */
+  #main[aria-busy="true"] .archive,
+  #main[aria-busy="true"] .page__inner-wrap:not(.pub-shell),
+  #main[aria-busy="true"] .pub-shell > *:not(.pubx) {
+    opacity: 0.45;
+    transition: opacity 0.12s ease;
+  }
+
+  .pubx__empty {
+    margin: 1em 0 0;
+    font-size: 0.8em;
+    color: #696f75;
+  }
+
+  html[data-theme="dark"] .pubx__empty { color: #bcc0c4; }
+
+  /* Below the two-column breakpoint the index folds up above the paper so it
+     never pushes the abstract off the screen. */
+  @media (max-width: 1023px) {
+    .pubx {
+      border: 1px solid var(--global-border-color);
+      border-radius: 4px;
+      padding: 0.9em 1em 0.4em;
+    }
+
+    .pubx__list {
+      max-height: 19em;
+      overflow-y: auto;
     }
   }
 

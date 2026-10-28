@@ -7,6 +7,9 @@ permalink: /publication/2026-03-20-FL_Biobanks_Hackathon
 excerpt: 'This preprint presents prototype federated learning software developed during the 2026 Carnegie Mellon University–NVIDIA Federated Learning Hackathon for Biomedical Applications. The work demonstrates federated frameworks across biomedical tasks including disease subtyping, genetic association studies, histopathology harmonization, rare disease stratification, cancer subtyping, polygenic risk score aggregation, and multimodal clinical prediction.'
 date: 2026-03-20
 venue: 'BioHackrXiv'
+venue_short: 'BioHackrXiv'
+venue_type: preprint
+topics: ['Federated Learning', 'Medical AI']
 paperurl: 'https://osf.io/preprints/biohackrxiv/5psfj'
 videoslug: 'nvidia_hackathon'
 citation: 'Mu, J., et al., 2026. Towards Federated Learning Across Biobanks: Prototype Software from the 2026 Carnegie Mellon University–NVIDIA Hackathon. BioHackrXiv. https://doi.org/10.37044/osf.io/5psfj_v1.'

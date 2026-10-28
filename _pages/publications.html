@@ -185,23 +185,20 @@ html[data-theme="dark"] { --sec-text: #bcc0c4; }
   {% endif %}
 
   <article class="pub">
+    {% comment %}
+      Title and teaser both open this paper's own page. The published PDF is
+      one click away from there, and from the "Paper" button below, so neither
+      needs to throw the reader straight off the site.
+    {% endcomment %}
     {% if post.teaser %}
       <div class="pub__figure">
-        {% if post.paperurl %}
-          <a href="{{ post.paperurl }}"><img src="{{ post.teaser | relative_url }}" alt="{{ post.title }}"></a>
-        {% else %}
-          <img src="{{ post.teaser | relative_url }}" alt="{{ post.title }}">
-        {% endif %}
+        <a href="{{ post.url | relative_url }}"><img src="{{ post.teaser | relative_url }}" alt="{{ post.title }}"></a>
       </div>
     {% endif %}
 
     <div class="pub__body">
       <h3 class="pub__title">
-        {% if post.paperurl %}
-          <a href="{{ post.paperurl }}">{{ post.title }}</a>
-        {% else %}
-          {{ post.title }}
-        {% endif %}
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
       </h3>
 
       {% if post.authors %}

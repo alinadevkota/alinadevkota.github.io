@@ -24,20 +24,241 @@
      player or a 404 link. -->
 <script>
 (function () {
-  var nodes = document.querySelectorAll('[data-video-probe]');
-  if (!nodes.length || !window.fetch) return;
   var seen = {};
-  nodes.forEach(function (el) {
-    var url = el.getAttribute('data-video-probe');
-    if (!url) return;
-    if (!seen[url]) {
-      seen[url] = fetch(url, { method: 'HEAD' })
-        .then(function (r) { return r.ok; })
-        .catch(function () { return false; });
-    }
-    seen[url].then(function (ok) { if (ok) { el.hidden = false; } });
-  });
+  /* Exposed so it can run again over markup swapped in after load. Results
+     are cached per URL, so revisiting a paper costs no extra requests. */
+  window.probeVideos = function (root) {
+    var nodes = (root || document).querySelectorAll('[data-video-probe]');
+    if (!nodes.length || !window.fetch) return;
+    Array.prototype.forEach.call(nodes, function (el) {
+      var url = el.getAttribute('data-video-probe');
+      if (!url) return;
+      if (!seen[url]) {
+        seen[url] = fetch(url, { method: 'HEAD' })
+          .then(function (r) { return r.ok; })
+          .catch(function () { return false; });
+      }
+      seen[url].then(function (ok) { if (ok) { el.hidden = false; } });
+    });
+  };
+  window.probeVideos(document);
 })();
 </script>
 
 <!-- end custom footer snippets -->
+<script>
+/* Paper-page index: regroup and filter.
+
+   Progressive enhancement only. Liquid has already rendered every paper as a
+   real link grouped by year; this re-sorts those same nodes and inserts new
+   group headings. With JavaScript off the index still lists everything, in
+   date order, with the current paper marked.
+
+   Exposed as window.pubxInit so it can be wired again after soft navigation
+   brings in a fresh pane. */
+(function () {
+  function init() {
+    var list = document.getElementById('pubx-list');
+    if (!list || list.dataset.wired) return;
+    list.dataset.wired = '1';
+
+    var aside  = list.closest('.pubx');
+    var empty  = aside.querySelector('.pubx__empty');
+    var sorts  = aside.querySelectorAll('.pubx__sort');
+    var filter = aside.querySelector('.pubx__filter');
+    var items  = Array.prototype.slice.call(list.querySelectorAll('.pubx__item'));
+
+    var MODES = {
+      date:  { key: function (el) { return el.dataset.year; },
+               cmp: function (a, b) { return b.dataset.date.localeCompare(a.dataset.date); } },
+      venue: { key: function (el) { return el.dataset.venuetype; },
+               cmp: function (a, b) {
+                 return (a.dataset.venueorder - b.dataset.venueorder)
+                     || b.dataset.date.localeCompare(a.dataset.date); } },
+      topic: { key: function (el) { return el.dataset.topic; },
+               cmp: function (a, b) {
+                 /* Groups follow the order set in pub-index.html, not the
+                    alphabet, so the newest lines of work lead. */
+                 return (a.dataset.topicorder - b.dataset.topicorder)
+                     || a.dataset.topic.localeCompare(b.dataset.topic)
+                     || b.dataset.date.localeCompare(a.dataset.date); } }
+    };
+
+    function draw(mode, needle) {
+      var m = MODES[mode] || MODES.date;
+      var shown = items.filter(function (el) {
+        return !needle || el.dataset.find.indexOf(needle) !== -1;
+      }).sort(m.cmp);
+
+      var frag = document.createDocumentFragment(), group = null;
+      shown.forEach(function (el) {
+        var k = m.key(el);
+        if (k !== group) {
+          group = k;
+          var h = document.createElement('p');
+          h.className = 'pubx__grp';
+          h.textContent = k;
+          frag.appendChild(h);
+        }
+        frag.appendChild(el);
+      });
+
+      list.textContent = '';
+      list.appendChild(frag);
+      empty.hidden = shown.length > 0;
+    }
+
+    aside.addEventListener('click', function (e) {
+      var b = e.target.closest('.pubx__sort');
+      if (!b) return;
+      Array.prototype.forEach.call(sorts, function (s) {
+        s.setAttribute('aria-pressed', String(s === b));
+      });
+      draw(b.dataset.sort, filter.value.trim().toLowerCase());
+    });
+
+    filter.addEventListener('input', function () {
+      var active = aside.querySelector('.pubx__sort[aria-pressed="true"]');
+      draw(active ? active.dataset.sort : 'date', this.value.trim().toLowerCase());
+    });
+  }
+
+  window.pubxInit = init;
+  init();
+})();
+</script>
+
+<script>
+/* Soft navigation across the whole site.
+
+   Every link stays a real <a> to a real, server-rendered URL - that is what
+   keeps the pages indexable and shareable. This only intercepts the click,
+   fetches the target and swaps the content in, so the masthead, the theme
+   switch and (between two paper pages) the index pane keep their state.
+
+   Two modes:
+     - paper -> paper: replace everything inside .pub-shell except the index,
+       so the pane keeps its scroll position, grouping and filter text.
+     - anything else: replace the contents of #main.
+
+   Anything unusual - a modified click, an external link, a file, a failed
+   fetch, no History API - falls through to an ordinary navigation. */
+(function () {
+  var main = document.getElementById('main');
+  if (!main || !window.fetch || !window.history || !history.pushState) return;
+
+  var SKIP = /\.(pdf|png|jpe?g|webp|gif|svg|zip|gz|docx?|pptx?|xlsx?|csv|txt|xml|json|ics|bib)$/i;
+  var token = 0;
+
+  function restOf(shell) {
+    return Array.prototype.filter.call(shell.children, function (el) {
+      return !el.classList.contains('pubx');
+    });
+  }
+
+  function markIndex() {
+    var aside = document.querySelector('.pubx');
+    if (!aside) return;
+    /* Compare resolved paths: the markup carries a root-relative href while
+       the live location is absolute, so raw strings never match. */
+    var path = location.pathname.replace(/\/$/, '');
+    Array.prototype.forEach.call(aside.querySelectorAll('.pubx__item'), function (a) {
+      var here = a.pathname.replace(/\/$/, '') === path;
+      a.classList.toggle('is-current', here);
+      if (here) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+  }
+
+  /* The theme binds these once at load, directly to elements inside #main.
+     After a swap those elements are gone, so the new ones need wiring. */
+  function rebindTheme() {
+    if (!window.jQuery) return;
+    var $ = window.jQuery;
+    $('.author__urls-wrapper button').off('click.soft').on('click.soft', function () {
+      $('.author__urls').fadeToggle('fast');
+      $('.author__urls-wrapper button').toggleClass('open');
+    });
+    if ($.fn.smoothScroll) {
+      $('#main a').smoothScroll({ offset: -70, preventDefault: false });
+    }
+  }
+
+  function afterSwap(scope) {
+    if (window.probeVideos) window.probeVideos(scope);
+    if (window.pubxInit) window.pubxInit();
+    markIndex();
+    rebindTheme();
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      window.MathJax.typesetPromise([scope]);
+    }
+    var h = scope.querySelector('.page__title, .archive__subtitle, h1');
+    if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+  }
+
+  function swap(url, push) {
+    var mine = ++token;
+    main.setAttribute('aria-busy', 'true');
+
+    return fetch(url, { credentials: 'same-origin' })
+      .then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        return r.text();
+      })
+      .then(function (html) {
+        if (mine !== token) return;                      // a later click won
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        var newMain = doc.getElementById('main');
+        if (!newMain) throw new Error('no #main');
+
+        if (push) history.pushState({ soft: true }, '', url);
+        document.title = doc.title;
+
+        var here = document.querySelector('.pub-shell');
+        var there = doc.querySelector('.pub-shell');
+
+        if (here && there) {
+          /* Paper to paper: keep the index pane exactly as the reader left it. */
+          restOf(here).forEach(function (el) { el.remove(); });
+          restOf(there).forEach(function (el) { here.appendChild(el); });
+          main.removeAttribute('aria-busy');
+          afterSwap(here);
+        } else {
+          main.innerHTML = newMain.innerHTML;
+          main.removeAttribute('aria-busy');
+          afterSwap(main);
+        }
+        window.scrollTo(0, 0);
+      })
+      .catch(function () {
+        if (mine === token) location.href = url;          // let the browser do it
+      });
+  }
+
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest('a[href]');
+    if (!a || a.target || a.hasAttribute('download')) return;
+    if (a.origin !== location.origin) return;
+
+    var raw = a.getAttribute('href');
+    if (!raw || raw.charAt(0) === '#') return;            // in-page anchor
+    if (SKIP.test(a.pathname)) return;                    // a file, not a page
+    if (a.pathname === location.pathname && a.hash) return;
+
+    if (a.pathname.replace(/\/$/, '') === location.pathname.replace(/\/$/, '')) {
+      e.preventDefault();                                  // already here
+      return;
+    }
+    e.preventDefault();
+    swap(a.href, true);
+  });
+
+  window.addEventListener('popstate', function (e) {
+    if (e.state && e.state.soft) swap(location.href, false);
+  });
+
+  /* So the first Back press returns here rather than to the page before. */
+  history.replaceState({ soft: true }, '', location.href);
+})();
+</script>

@@ -7,6 +7,9 @@ permalink: /publication/2026-10-27-MedTEC-Bench
 excerpt: 'MedTEC-Bench is a diagnostic benchmark that probes semantic understanding in medical vision-language models across five levels of increasing specificity, from broad modality recognition through fine-grained findings to negation, spanning five imaging modalities. Evaluating eleven VLMs shows that models reporting strong retrieval and zero-shot scores often fail on basic yet clinically meaningful semantic distinctions.'
 date: 2026-10-27
 venue: 'NeurIPS 2026 Evaluations & Datasets Track'
+venue_short: 'NeurIPS D&B'
+venue_type: conference
+topics: ['Vision-Language', 'Medical AI']
 paperurl_pending: true
 citation: 'Akash, A.H., Devkota, A., Adjeroh, D., Bhattarai, B. and Gyawali, P.K., 2026. When Medical VLMs Stop Understanding: MedTEC-Bench for Probing Semantic Specificity. NeurIPS Evaluations and Datasets Track.'
 teaser: images/publications/MedTEC_teaser.png
